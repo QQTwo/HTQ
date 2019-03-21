@@ -3,49 +3,67 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   <mapper namespace="com.accp.dao.xzc.ItieziDao">
+<mapper namespace="com.accp.dao.xzc.ItieziDao">
 	<select id="queryall" resultType="com.accp.vo.xzc.postVo">
 		SELECT * FROM post p JOIN forummanagement f ON p.fmID=f.fmID
 		<where>
-				<if test="fmname!=null">
-					AND fmName like '%${fmname}%'
-				</if>
-				<if test="title!=null">
-					AND title like'%${title}%'
-				</if>
-					<if test="1==1">
-					AND operatingState=1 
-				</if>
+			<if test="fmname!=null">
+				AND fmName like '%${fmname}%'
+			</if>
+			<if test="title!=null">
+				AND title like'%${title}%'
+			</if>
+			<if test="1==1">
+				AND operatingState=1
+			</if>
 		</where>
 	</select>
 	<select id="querypost" resultType="com.accp.vo.xzc.postVo">
-		SELECT * FROM post p JOIN forummanagement f ON p.fmID=f.fmID where postID=#{postid}
+		SELECT * FROM post p JOIN
+		forummanagement f ON p.fmID=f.fmID where postID=#{postid}
 	</select>
 	<select id="queryglall" resultType="com.accp.vo.xzc.postglVo">
-		SELECT * FROM post p JOIN forummanagement f ON p.fmID=f.fmID JOIN `user` u ON p.`userID`=u.userid
+		SELECT * FROM forummanagement f JOIN admin a ON f.adminid=a.adminid
+		ORDER BY sort ASC
+	</select>
+	<select id="queryglallxq" resultType="com.accp.vo.xzc.postglVo">
+		SELECT * FROM forummanagement f JOIN admin a ON f.adminid=a.adminid
+		<where>
+			<if test="fmid!=null">
+				fmid = #{fmid}
+			</if>
+		</where>
+		ORDER BY sort ASC
 	</select>
 	<select id="queryts" resultType="com.accp.vo.xzc.posttsVo">
-		SELECT * FROM Complaint c JOIN post p ON c.posting=p.`userID` JOIN `user` u ON p.`userID`=u.userid JOIN ComplaintType ct ON c.ctid=ct.ctid
+		SELECT * FROM Complaint c JOIN post p ON c.posting=p.`userID` JOIN
+		`user` u ON p.`userID`=u.userid JOIN ComplaintType ct ON
+		c.ctid=ct.ctid
 		<where>
 			<if test="title!=null">
-					AND title like '%${title}%' 
-				</if>
+				AND title like '%${title}%'
+			</if>
 		</where>
 	</select>
-	<select id="queryfmname" resultType="com.accp.pojo.Forummanagement">
+	<select id="queryfmname"
+		resultType="com.accp.pojo.Forummanagement">
 		select * from forummanagement
 	</select>
 	<update id="deletechoose">
-		UPDATE post SET operatingState = 2 WHERE postid = #{postid}
+		UPDATE post SET operatingState = 2 WHERE postid =
+		#{postid}
 	</update>
-		<select id="queryAll" resultType="com.accp.vo.xzc.recordVo">
-		SELECT u.userID,g.`recordID`,u.`userName`,g.`acquisitionMode`,g.`recordDate`,
-		g.`recordDescribe`,g.`recordInAndOut`,g.`auditStatus` FROM Goldnotes AS g
+	<select id="queryAll" resultType="com.accp.vo.xzc.recordVo">
+		SELECT
+		u.userID,g.`recordID`,u.`userName`,g.`acquisitionMode`,g.`recordDate`,
+		g.`recordDescribe`,g.`recordInAndOut`,g.`auditStatus` FROM Goldnotes
+		AS g
 		JOIN `user` AS u ON g.`userID`=u.`userID`
 		<where>
 			<if test="userName!=null">
-				AND u.userName like '%${userName}%' 
+				AND u.userName like '%${userName}%'
 			</if>
 		</where>
-		</select>
-	</mapper>
+		ORDER BY recordDate DESC
+	</select>
+</mapper>

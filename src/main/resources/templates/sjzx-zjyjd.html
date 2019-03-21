@@ -109,7 +109,7 @@ $(function(){
 				
 				<input type="hidden" name="stid" value="1" />
 
-			<form method="post"  id="formmsg" onSubmit="return chkform();" action="/index.php/Home/Seller/authsave.html">		
+			<form method="post"  id="formmsg" onSubmit="return chkform();" action="/index.php/Home/Seller/authsave.html">
 				<input type="hidden" name="catid" value="3" />
 				<input type="hidden" name="aid" value="0" />
 
@@ -310,4 +310,10 @@ $(function(){
 <script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
+<script type="text/javascript">
+var userid=[[${session.USER.userid}]];
+
+initWebSocket(-1,userid);	
+</script>
 </html>

@@ -8,15 +8,16 @@
 <select id="queryAllUser" resultType="com.accp.pojo.User">
 		SELECT *FROM USER u JOIN ShArea sh ON sh.areaID=u.country 
 		<where>
+			<if test="username!=null">
+					AND username=#{username} 
+				</if>
 				<if test="auditstatus!=0">
-					auditstatus=#{auditstatus}
+					AND auditstatus=#{auditstatus}
 				</if>
 				<if test="merchanttype!=0">
 					AND merchanttype=#{merchanttype} 
 				</if>
-					<if test="username!=null">
-					AND username=#{username} 
-				</if>
+					
 		</where>
 		ORDER BY merchantRegistrationTime DESC
 	</select>
@@ -31,10 +32,15 @@
 	</select>
 	<select id="queryAllAppraisalApply" resultType="com.accp.vo.xzc.appVo">
 	SELECT *,(SELECT userName FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`) AS userName
+	,(SELECT merchantType FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`)  
+	AS merchantType
 		FROM Appraisalapply 
 		<where>
+			<if test="name!='null'">
+				and	name like '%${name}%'
+				</if>
 				<if test="auditstatus!=0">
-					auditstatus=#{auditstatus}
+					and auditStatus=#{auditstatus}
 				</if>
 		</where>
 		ORDER BY submitTime DESC
@@ -43,8 +49,10 @@
 			UPDATE 	`Appraisalapply` SET auditStatus = 3 WHERE userid = #{userid}
 		</update>
 		<select id="queryAppraisalApply" resultType="com.accp.vo.xzc.appVo">
-	SELECT *,(SELECT userName FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`) AS userName
-		FROM Appraisalapply 
+		SELECT *,(SELECT userName FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`) 
+	AS userName,(SELECT merchantType FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`)  
+	AS merchantType
+	FROM Appraisalapply 
 		<where>
 				<if test="userid!=0">
 					userid=#{userid}
@@ -52,4 +60,24 @@
 		</where>
 		ORDER BY submitTime DESC
 	</select>
+	
+	<update id="updataAppra">
+		update AppraisalApply set auditStatus=#{auditstatus},adminOpinion=#{reason} where userid=#{userid};
+		<if test="auditstatus==2">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType)VALUES(#{userid},'您的鉴定申请已通过审核',NOW(),0,1);
+		</if>
+		<if test="auditstatus==3">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType)VALUES(#{userid},'您的鉴定申请未通过审核',NOW(),0,1);
+		</if>
+</update>
+<update id="updatauser">
+		UPDATE USER SET `auditStatus` = #{auditstatus} WHERE `userID` = #{userid};
+		<if test="auditstatus==2">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType) VALUES(#{userid},'您的鉴定申请已通过审核',NOW(),0,1);
+		</if>
+		<if test="auditstatus==3">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType)VALUES(#{userid},'您的鉴定申请未通过审核',NOW(),0,1);
+		</if>
+</update>
+
 </mapper>

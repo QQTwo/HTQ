@@ -8,8 +8,9 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
+
 	$.ajax({
-		url : "/tz/getgllist",
+		url : "/tz/getgllist/"+1+"/"+10,
 		type : "get",
 		dataType : "json",
 		success:function(data){
@@ -264,22 +265,22 @@ layui.config({
 				for(var i=0;i<data.list.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked"  id="'+data.list[i].postid+'" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td>'+data.list[i].postid+'</td>'
-			    	+'<td>'+data.list[i].signType+'</td>'
+			    	+'<td>'+data.list[i].fmid+'</td>'
+			    	+'<td>'+data.list[i].sort+'</td>'
 			    	+'<td>'+data.list[i].fmname+'</td>';
 			    	if(data.list[i].auditstatus == 1){
-			    		dataHtml += '<td>'+"未审核"+'</td>';
+			    		dataHtml += '<td style="color:red">'+"未审核"+'</td>';
 			    	}else if(data.list[i].auditstatus == 2){
-			    		dataHtml += '<td>'+"已审核"+'</td>';
+			    		dataHtml += '<td style="color:green">'+"已审核"+'</td>';
 			    	}else{
 			    		dataHtml += '<td style="color:#f00">'+"未通过"+'</td>';	
 			    	}
-			    	if(data.list[i].giftIntegral == 1){
-			    		dataHtml += '<td>'+"赠送"+'</td>';
-			    	}else if(data.list[i].giftIntegral == 2){
-			    		dataHtml += '<td>'+"不增送"+'</td>';
+			    	if(data.list[i].giftintegral == 1){
+			    		dataHtml += '<td style="color:green">'+"赠送"+'</td>';
+			    	}else if(data.list[i].giftintegral == 2){
+			    		dataHtml += '<td style="color:red">'+"不增送"+'</td>';
 			    	}
-			    	dataHtml += '<td>'+data.list[i].userrealname+'</td>'
+			    	dataHtml += '<td>'+data.list[i].name+'</td>'
 					+'<td><a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>修 改</a>	<a style="font-size: 16px;" class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="1"  id="'+data.list[i].postid+'"><i class="layui-icon"></i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
@@ -291,10 +292,10 @@ layui.config({
 		
 
 		//分页
-		/*var nums = 13; //每页出现的数据量
-		if(that){
+		    var nums = 10; //每页出现的数据量
+		    if(that){
 			newsData = that;
-		}
+		    }
 		laypage({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
@@ -303,6 +304,6 @@ layui.config({
 				$('.news_list thead input[type="checkbox"]').prop("checked",false);
 		    	form.render();
 			}
-		})*/
+		})
 	}
 })

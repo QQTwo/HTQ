@@ -9,7 +9,7 @@ layui.config({
 	$(".panel a").on("click",function(){
 		window.parent.addTab($(this));
 	})
-
+/*
 	//动态获取文章总数和待审核文章数量,最新文章
 	$.get("../json/newsList.json",
 		function(data){
@@ -37,7 +37,7 @@ layui.config({
 	//图片总数
 	$.get("../json/images.json",
 		function(data){
-			$(".imgAll span").text(data.length);
+			$(".imgAll span").text(999);
 		}
 	)
 
@@ -74,7 +74,7 @@ layui.config({
 				fillParameter(data);
 			}
 		})
-	}
+	}*/
 
 	//填充数据方法
  	function fillParameter(data){

@@ -67,6 +67,7 @@
 				AND serviceTitle like '%${serviceTitle}%'
 			</if>
 		</where>
+		order by a.`collectionTime` desc
 	</select>
 	<!-- BBS收藏 -->
 	<!-- <select id="">
@@ -90,7 +91,7 @@
 		</where>
 		ORDER BY p.submitTime DESC
 	</select>
-	<!-- 查询体现会员对象 -->
+	<!-- 查询提现会员对象 -->
 	<select id="queryForward" resultType="com.accp.vo.cm.ForwardVo">
 			SELECT u.userID,p.`pfID`,u.`userName`,p.`submitTime`,p.`money`,p.`bankAccount`,b.`bankName`,p.`openBankName`,
 			u.`userRealName`,p.`auditStatus`,pr.`adminOpinion` FROM goldnotes AS g
@@ -121,9 +122,7 @@
 		</update>
 		<!-- 积分记录 -->
 		<select id="queryIntegral" resultType="com.accp.vo.cm.IntegralVo">
-			
-	SELECT i.`IRID`,u.`userName`,i.`IRDate`,i.`IRDescribe`,i.`recordInAndOut`,i.auditStatus FROM
-			
+			SELECT i.`IRID`,u.`userName`,i.`IRDate`,i.`IRDescribe`,i.`recordInAndOut`,i.auditStatus FROM
 			  `integralrecord` AS i
 			  
 			JOIN `user` AS u ON i.`userID`=u.`userID`
@@ -152,4 +151,201 @@
 			</where>
 			order by g.`recordDate` desc
 		</select>
+		<!-- 商家推荐 -->
+	<select id="shopRecomment" resultType="com.accp.vo.cm.ShopRecomment">
+		SELECT s.`serviceID`,u.`userID`,u.`userName`,u.`shopName`,t.`stName`,u.`adDetail`,u.`merchantType`,u.`auditStatus`,u.`userSex`,u.`merchantPhone`,s.`recommendBool`,u.`guaranteeMoney`,u.`qq`,u.`weChat`,u.`registerIP`,u.`lastEntry`,u.`userRegistrationTime`,u.`recentEntry`,u.`businessState`,s.`serviceCoverImg` FROM `services` AS s
+			LEFT JOIN `user` AS u ON s.`userID`=u.`userID`
+			LEFT JOIN `servicetype` AS t ON s.`stid`=t.`stid`
+		<where>
+		 		u.`merchantType`!=0
+			<if test="userName!=null">
+			    and u.`userName` like '%${userName}%' 
+			</if>
+			<if test="merchantType!='-1'">
+				and u.`merchantType`=#{merchantType}  
+			</if>
+			<if test="shopName!=null">
+				and u.`shopName` like '%${shopName}%'  
+			</if>
+			<if test="recommendbool!='-1'">
+				and s.`recommendbool`=#{recommendbool}
+			</if>
+		</where>
+	</select>
+	<!-- 商家推荐审核编辑 -->
+	<select id="loadshopRe"  resultType="com.accp.vo.cm.ShopRecomment">
+		SELECT s.`serviceID`,u.`userID`,u.`userName`,u.`shopName`,t.`stName`,u.`merchantType`,
+			u.`auditStatus`,u.`userSex`,u.`merchantPhone`,s.`recommendBool`,u.`guaranteeMoney`,
+			u.`qq`,u.`weChat`,u.`registerIP`,u.`lastEntry`,u.`userRegistrationTime`,u.`recentEntry`,
+			u.`businessState`,u.`adDetail`,s.`serviceCoverImg` FROM `services` AS s 
+			LEFT JOIN `user` AS u ON s.`userID`=u.`userID` LEFT JOIN `servicetype` AS t 
+			ON s.`stid`=t.`stid` WHERE u.`merchantType`!=0 AND s.`serviceID`=#{serviceID}
+	</select>
+	<update id="updateRecomment">
+		UPDATE services SET recommendBool=#{services.recommendbool} WHERE serviceID=#{services.serviceid} 
+	</update>	
+	<!-- 保证金管理 -->
+	<select id="baozhengjinList" resultType="com.accp.vo.cm.BaoZhengjinVo">
+		SELECT b.`bID`,u.`userID`,u.`userName`,u.`userRealName`,
+		u.`shopName`,b.`goldCoin`,b.`auditStatus`,
+		b.`reviewNotes`,b.`submitTime` 
+		FROM`user` AS u 
+		JOIN goldnotes AS g
+		ON u.`userID`=g.`userID`
+		JOIN bond AS b ON 
+		g.`recordDate`=b.`submitTime`
+		<where>
+			<if test="userName!=null">
+				AND u.userName like '%${userName}%' 
+			</if>
+			<if test="auditStatus!=0">
+				AND b.auditStatus=#{auditStatus}
+			</if>
+		</where>
+		ORDER BY b.submitTime DESC
+	</select> 
+	<!-- 加载保证金对象 -->
+	<select id="loadbaozhengjin" resultType="com.accp.vo.cm.BaoZhengjinVo">
+		SELECT b.`bID`,u.`userID`,u.`userName`,u.`userRealName`,
+		u.`shopName`,b.`goldCoin`,b.`auditStatus`,
+		b.`reviewNotes`,b.`submitTime` 
+		FROM`user` AS u 
+		JOIN goldnotes AS g
+		ON u.`userID`=g.`userID`
+		JOIN bond AS b ON 
+		g.`recordDate`=b.`submitTime`
+			<where>
+				<if test="userID!=null">
+				u.`userID`=#{userID} AND b.submitTime='${Time}' AND b.`bID`=#{bID}
+				</if>
+			</where>
+	</select>
+	<!-- 审核保证金申请 -->
+	<update id="updateBaozhengjin">
+		UPDATE bond SET auditStatus=#{vo.auditStatus},completeTime=NOW(),reviewNotes=#{vo.reviewNotes} WHERE userID=#{vo.userID} AND submitTime=#{vo.submitTime};
+		UPDATE `goldnotes` SET auditStatus=#{vo.auditStatus} WHERE userID=#{vo.userID} AND recordDate=#{vo.submitTime};
+		<if test="vo.auditStatus==2">
+			INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType) VALUES('${vo.userID}','您的退回保证金申请已通过审核',NOW(),0,1);
+			insert into goldnotes (userID,acquisitionMode,recordDate,recordDescribe,recordInAndOut)
+			value('${vo.userID}',4,now(),'退保证金',#{vo.goldCoin});
+			update `user` set userMoney=userMoney+#{vo.goldCoin} where userid=#{vo.userID};
+		</if>
+		<if test="vo.auditStatus==3">
+			INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType) VALUES('${vo.userID}','您的退回保证金申请未通过审核',NOW(),0,1);
+		</if>
+	</update>
+	<!-- 后台首页 -->
+	<select id="queryAllServices"
+		resultType="com.accp.pojo.Services">
+		SELECT *FROM services WHERE auditStatus=1
+		ORDER BY releaseTime DESC
+	</select>
+	<select id="queryAllAppraisalApply"
+		resultType="com.accp.vo.cm.AlaVo">
+		SELECT *,(SELECT userName FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`) AS userName
+		FROM Appraisalapply WHERE auditStatus=1
+		ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllUser" resultType="com.accp.pojo.User">
+		SELECT *FROM USER WHERE
+		auditStatus=1 AND merchantType!=0
+		ORDER BY merchantRegistrationTime DESC
+	</select>
+	<select id="queryAllPut" resultType="com.accp.vo.cm.PutVo">
+		SELECT *,(SELECT userName FROM USER WHERE userid=`Putforward`.`userID`) AS userName FROM Putforward
+		WHERE auditStatus=1
+		ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllLogistics"
+		resultType="com.accp.pojo.Logistics">
+		SELECT *FROM Logistics WHERE auditStatus=1 ORDER BY orderTime DESC
+	</select>
+	<select id="queryAllBond" resultType="com.accp.vo.cm.BondVo">
+		SELECT *,(SELECT userName FROM USER WHERE userid=`Bond`.`userID`) AS userName FROM `Bond`
+		WHERE auditStatus=1 ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllPost" resultType="com.accp.vo.cm.PostVoCm">
+		SELECT *,(SELECT userName FROM `USER` WHERE userid=`Post`.`userID`) AS userName FROM Post WHERE
+		auditStatus=1 AND operatingState!=2 ORDER BY releaseTime DESC
+	</select>
+	<select id="queryAllRefund" resultType="com.accp.vo.cm.RefVo">
+		SELECT *,(SELECT userName FROM `USER` WHERE userid=`Refund`.`userID`) AS userName FROM Refund WHERE
+		auditStatus=1 AND POINT=2
+	</select>
+	<!-- 商家管理 -->
+	<select id="queryShop" resultType="com.accp.vo.cm.UserVo">
+		SELECT u.`userID`,u.`userName`,u.`mailboxVerification`,u.`userIntegral`,u.`userMoney`,l.`loginType`,
+		u.`auditStatus`,u.`userPhone`,u.`merchantType`,u.`recentEntry`,u.`shopName`,u.merchantEmail,u.businessState 
+		FROM `user` AS u
+		JOIN login AS l ON u.`userID`=l.`userID`
+		<where>
+			<if test="userName!=null">
+				 u.`userName` like '%${userName}%' and
+			</if>
+			<if test="shopName!=null">
+				 u.`shopName` like '%${shopName}%'  and
+			</if>
+			<if test="merchantType!=null">
+				 u.`merchantType`=#{merchantType} and
+			</if>
+			u.`merchantType`!=0
+		</where>
+	</select>
+	<!-- 商家管理金币总算 -->
+	<select id="summShopmoney" resultType="java.lang.Float">
+		SELECT sum(userMoney) as sjinbi
+		FROM `user` AS u
+		JOIN login AS l ON u.`userID`=l.`userID`
+		<where>
+			<if test="userName!=null">
+				 u.`userName` like '%${userName}%' and
+			</if>
+			<if test="shopName!=null">
+				 u.`shopName` like '%${shopName}%'  and
+			</if>
+			<if test="merchantType!=null">
+				 u.`merchantType`=#{merchantType} and
+			</if>
+			u.`merchantType`!=0
+		</where>
+	</select>
+	<!-- 商家管理积分总算 -->
+	<select id="sumShopjifen" resultType="java.lang.Float">
+		SELECT SUM(userIntegral) AS sjifen
+		FROM `user` AS u
+		JOIN login AS l ON u.`userID`=l.`userID`
+		<where>
+			<if test="userName!=null">
+				 u.`userName` like '%${userName}%' and
+			</if>
+			<if test="shopName!=null">
+				 u.`shopName` like '%${shopName}%'  and
+			</if>
+			<if test="merchantType!=null">
+				 u.`merchantType`=#{merchantType} and
+			</if>
+			u.`merchantType`!=0
+		</where>
+	</select>
+	<!-- 加载商家对象 -->
+	<select id="loadShopVo" resultType="com.accp.vo.cm.UserVo">
+		SELECT *
+		FROM `user` AS u
+		JOIN login AS l ON u.`userID`=l.`userID`
+		where u.userID=#{userID}
+	</select>
+	<!-- 商家管理审核 -->
+	<update id="updateShopVip">
+		update user set userPhone=#{u.userphone},userSex=#{u.usersex},country=#{u.country},
+		provincialID=#{u.provincialid},countyID=#{u.countyid},adDetail=#{u.addetail},
+		guaranteeMoney=#{u.guaranteemoney},reason=#{u.reason},businessState=#{u.businessstate},
+		auditStatus=#{u.auditstatus},mailboxVerification=#{u.mailboxverification} 
+		where userID=#{u.userid};
+		<if test="u.auditstatus==2">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType)VALUES(#{u.userid},'您的商家申请已通过审核',NOW(),0,1);
+		</if>
+		<if test="u.auditstatus==3">
+		INSERT INTO `news`(addRessee,content,sendingTime,readState,newsType)VALUES(#{u.userid},'您的商家申请未通过审核',NOW(),0,1);
+		</if>
+	</update>
 </mapper>

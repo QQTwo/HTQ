@@ -16,51 +16,51 @@
 <body class="childrenBody">
 	<div class="panel_box row">
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/message/message.html">
+			<a href="javascript:;" data-url="page/service/serviceAllCheck.html">
 				<div class="panel_icon">
 					<i class="layui-icon" data-icon="&#xe63a;">&#xe63a;</i>
 				</div>
-				<div class="panel_word newMessage">
+				<div class="panel_word services">
 					<span></span>
 					<cite>待处理 服务审核</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col"> 
-			<a href="javascript:;" data-url="page/user/allUsers.html">
+			<a href="javascript:;" data-url="page/member/jiandingApply.html">
 				<div class="panel_icon" style="background-color:#FF5722;">
 					<i class="iconfont icon-dongtaifensishu" data-icon="icon-dongtaifensishu"></i>
 				</div>
-				<div class="panel_word userAll">
+				<div class="panel_word ala">
 					<span></span>
 					<cite>待处理 申请鉴定</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/user/allUsers.html">
+			<a href="javascript:;" data-url="page/member/shopperRuzhu.html">
 				<div class="panel_icon" style="background-color:#009688;">
 					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
 				</div>
-				<div class="panel_word userAll">
+				<div class="panel_word user">
 					<span></span>
 					<cite>待处理 商家入驻</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/img/images.html">
+			<a href="javascript:;" data-url="page/member/tixianManagement.html">
 				<div class="panel_icon" style="background-color:#5FB878;">
 					<i class="layui-icon" data-icon="&#xe64a;">&#xe64a;</i>
 				</div>
-				<div class="panel_word imgAll">
+				<div class="panel_word put">
 					<span></span>
 					<cite>待处理 提现申请</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="javascript:void(0)">
 				<div class="panel_icon" style="background-color:#F7B824;">
 					<i class="iconfont icon-wenben" data-icon="icon-wenben"></i>
 				</div>
@@ -71,25 +71,23 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="page/member/baozhengjinManagement.html">
 				<div class="panel_icon" style="background-color:#2F4056;">
 					<i class="iconfont icon-text" data-icon="icon-text"></i>
 				</div>
-				<div class="panel_word allNews">
+				<div class="panel_word bond">
 					<span></span>
-					<em>待处理 保证金退还申请</em>
 					<cite>待处理 保证金退还申请</cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.html">
+			<a href="javascript:;" data-url="page/service/returnMoney.html">
 				<div class="panel_icon" style="background-color:#2F4056;">
 					<i class="iconfont icon-text" data-icon="icon-text"></i>
 				</div>
-				<div class="panel_word allNews">
+				<div class="panel_word refg">
 					<span></span>
-					<em>待处理 管理员介入申请</em>
 					<cite>待处理 管理员介入申请</cite>
 				</div>
 			</a>
@@ -99,9 +97,8 @@
 				<div class="panel_icon" style="background-color:#2F4056;">
 					<i class="iconfont icon-text" data-icon="icon-text"></i>
 				</div>
-				<div class="panel_word allNews">
+				<div class="panel_word post">
 					<span></span>
-					<em>待处理  帖子审核</em>
 					<cite>待处理  帖子审核</cite>
 				</div>
 			</a>
@@ -111,5 +108,33 @@
 
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/main.js"></script>
+	<script src="../js/jquery-1.12.4.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			initData();
+		});
+		function initData(){
+			//服务审核
+			$.get("/c/cmmember/getQuery",
+				function(data){
+					$(".services span").text(data.services.length);
+					//申请鉴定
+					$(".ala span").text(data.ala.length);
+					//商家入驻
+					$(".user span").text(data.user.length);
+					//提现
+					$(".put span").text(data.put.length);
+					//保证金退还申请
+					$(".bond span").text(data.bond.length);
+					//申请管理员介入
+					$(".refg span").text(data.refg.length);
+					//帖子鉴定
+					$(".post span").text(data.post.length);
+				}
+			)
+			
+		}
+	</script>
 </body>
 </html>

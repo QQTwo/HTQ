@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>登陆_韩汀社区</title>
@@ -121,13 +121,13 @@
 	</ul>
 	<!--right nav end-->
 </body>
+	
 <script type="text/javascript" src="/Public/js/layer/layer.js"></script>
 <script type="text/javascript" src="/Public/js/security.js"></script>
 <script type="text/javascript">
 		if('[[${gaimima}]]'=="Yes"){
 			layer.msg("修改成功，重新登陆!");
 		}
-		
 		create_code();
 		function submit1(){
 			var email=$("[name=email]").val();
@@ -179,7 +179,7 @@
 		           					$("[name=password]").val("");
 		           				}); 
 	           			}else{
-	           				layer.alert("系统异常："+result.msg);
+	           				layer.msg("系统异常："+result.msg);
 	           			}
 	           		})
 			})
@@ -187,5 +187,5 @@
 		})
 	</script>
 	<script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
-	
+
 </html>

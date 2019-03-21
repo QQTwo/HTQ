@@ -2,6 +2,7 @@ package com.accp.biz.xzc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -39,6 +40,9 @@ public class tieziBiz {
 	public PageInfo<postglVo> queryglpost(Integer PageNum,Integer PageSize){
 		PageHelper.startPage(PageNum, PageSize);
 		return new PageInfo<postglVo>(tz.queryglall());
+	}
+	public postglVo queryglpostxq(int fmid){
+		return tz.queryglallxq(fmid);
 	}
 	public PageInfo<posttsVo> querytspost(Integer PageNum,Integer PageSize,String title){
 		PageHelper.startPage(PageNum, PageSize);

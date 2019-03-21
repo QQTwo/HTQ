@@ -36,11 +36,6 @@ public interface IAreaDao {
 			 */
 			public List<Sharea> queryAllArea(Integer pid);
 			
-			/**
-			 * 获取当前选择父类地区
-			 * @param id
-			 * @return
-			 */
-			public List<Sharea> queryById(Integer id);
+			
 			
 }

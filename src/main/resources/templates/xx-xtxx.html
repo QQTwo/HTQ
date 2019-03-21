@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns:th="http://www.thymeleaf.org"  lang="en">
 
 	<head>
 		<meta charset="utf-8" />
@@ -69,7 +69,7 @@
 						<a href="">账户设置</a><span class="my_nav_i"></span>
 					</li>
 					<li class="cur" id="li4">
-						<a href="">消息<span class="msg_num">5</span></a><span class="my_nav_i"></span>
+						<a href="">消息</a><span class="my_nav_i"></span>
 					</li>
 
 				</ul>
@@ -185,7 +185,14 @@
 <script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript" src="/Public/js/noRead.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
 <script type="text/javascript">
+/* 
+alert(userid);
+initWebSocket(-1,userid); */	
+/* 
+initWebSocket(1,userid);
+initWebSocket(2,userid); */
 weiduInfo();
 var newsType=1;
 var pageNum=1;

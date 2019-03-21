@@ -80,17 +80,30 @@
 						</TR>
 						<TR>
 							<TD align=right>住址:</TD>
+							<!-- <TD colspan="3"><select id="country" name="country" onchange="updateCountry()" style="width: 120px;height:20px;outline:none; border-radius:5px;">
+					<option value="1" >中国</option><option value="2">韩国</option>		
+					</select>
+				<select name="provincialid" id="provincialid" onchange="updateCity()" style="width: 120px;height:20px;outline:none; border-radius:5px;">
+					<option value="0">省</option>
+				</select>
+			  <select  name="cityid" id="cityid"   style="width: 120px;height:20px;outline:none; border-radius:5px;">
+					<option value="0">市</option>
+                    </select>
+				<input name="addetail" type="text"  id="addetail" th:value="${data.addetail}" size="50"style="width: 200px;height:15px;outline:none; border-radius:5px;"/>
+            </TD> -->
+							
 							<TD colspan="3" class="tdd">
-								<select class="sel_f sel_f2 sel_b2" name="countryid" @change="setarea(this.value, 'shengid')">
-									<option value="399" selected>中国</option>
-									<option value="400">韩国</option>
-									<option value="1023">测试地址</option>
+								<select class="sel_f sel_f2 sel_b2" name="countryid" id="gj" @change="setarea()">
+								<option value="0">请选择</option>
+									<option v-for="(temp,index) in countryList" v-bind:value="temp.areaid">{{temp.name}}</option>
+									<!-- <option value="400">韩国</option>
+									<option value="1023">测试地址</option> -->
 								</select>
-								<select class="sel_f sel_f2 sel_b2" name="shengid" id="shengid" @change="setarea(this.value, 'areaid')">
-									<option value="0">省</option>
+								<select class="sel_f sel_f2 sel_b2" name="shengid" id="shengid" @change="setcity()">
+									<option v-for="(temp,index) in provinceList" v-bind:value="temp.areaid">{{temp.name}}省</option>
 								</select>
 								<select class="sel_f sel_f2 sel_b2" name="areaid" id="areaid">
-									<option value="0">市</option>
+									<option v-for="(temp,index) in cityList"  v-bind:value="temp.areaid">{{temp.name}}市</option>
 								</select>
 								<input name="address" type="text" class="input_c inf_inc" id="address" v-model=userInfo.adDetail size="50" />
 							</TD>
@@ -118,15 +131,15 @@
 						  <TD  align=right>资料审核:</TD>
 						  <TD >
 			              <label>
-			                <input name="zt" type="radio" id="check"  v-model="userInfo.auditStatus" value="2">已通过审核</label>
+			                <input name="zt" type="radio" id="check"  v-model="userInfo.auditStatus" value="1">已通过审核</label>
 			              <label>
-			                <input type="radio" name="zt"  id="check" v-model="userInfo.auditStatus" value="3">未通过审核</label></TD>
+			                <input type="radio" name="zt"  id="check" v-model="userInfo.auditStatus" value="2">未通过审核</label></TD>
 			            <TD  align=right>邮箱验证:</TD>
 			            <TD >
 			              <label>
-			                <input name="check" type="radio" id="checkEma" v-model="userInfo.mailboxVerification" value="1">已通过验证</label>
+			                <input name="check" type="radio" id="checkEma" v-model="userInfo.mailboxVerification" value="true">已通过验证</label>
 			              <label>
-			                <input type="radio" name="check" id="checkEma" v-model="userInfo.mailboxVerification" value="2">未通过验证</label>
+			                <input type="radio" name="check" id="checkEma" v-model="userInfo.mailboxVerification" value="false">未通过验证</label>
 			            </TD>
 					  </TR>
 					  <tr>
@@ -154,8 +167,31 @@
 			el: "#userVm",
 			data: {
 				//会员信息
-				userInfo:{}
-				
+				userInfo:{},
+				countryList:[],
+				provinceList:[],
+				cityList:[]
+			},//组件创建
+			created: function() {
+				var userid=window.sessionStorage.getItem("userid");
+				if(userid){
+					$.getJSON("/c/cmmember/users/user/"+userid,function(data){
+						userVm.userInfo=data;
+						console.log(userVm.userInfo)
+					});
+				}
+				$.ajax("/c/cmmember/queryArea",{
+					type:"get",
+					dataType:"json",
+					contentType:"application/json",
+					data:{
+						"id":0,
+					},
+					success:function(json){
+						userVm.countryList=json;
+						console.log("国家："+userVm.countryList);
+					}
+				})
 			},
 			methods:{
 				updateUserInfo:function(e){
@@ -174,26 +210,35 @@
 						}
 					});
 				},
-				setarea:function(id,param){
+				setarea:function(){
+					var id=$("#gj").val();
 					$.ajax("/c/cmmember/queryArea",{
 						type:"get",
 						dataType:"json",
 						contentType:"application/json",
-						
+						data:{
+							"id":id,
+						},
 						success:function(json){
-							
+							userVm.provinceList=json;
+							console.log("省："+userVm.provinceList);
 						}
 					})
-				}
-			},
-			//组件创建
-			created: function() {
-				var userid=window.sessionStorage.getItem("userid");
-				if(userid){
-					$.getJSON("/c/cmmember/users/user/"+userid,function(data){
-						userVm.userInfo=data;
-						console.log(userVm.userInfo)
-					});
+				},
+				setcity:function(){
+					var id=$("#shengid").val();
+					$.ajax("/c/cmmember/queryArea",{
+						type:"get",
+						dataType:"json",
+						contentType:"application/json",
+						data:{
+							"id":id,
+						},
+						success:function(json){
+							userVm.cityList=json;
+							console.log("市："+userVm.cityList);
+						}
+					})
 				}
 			}
 		})

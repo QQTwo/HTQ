@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.cm.IBackstageDaoCm">
+	<!-- 后台首页 -->
+	<select id="queryAllServices"
+		resultType="com.accp.pojo.Services">
+		SELECT *FROM services WHERE auditStatus=1
+		ORDER BY releaseTime DESC
+	</select>
+	<select id="queryAllAppraisalApply"
+		resultType="com.accp.vo.cm.AlaVo">
+		SELECT *,(SELECT userName FROM `user` WHERE `user`.`userID`=Appraisalapply.`userID`) AS userName
+		FROM Appraisalapply WHERE auditStatus=1
+		ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllUser" resultType="com.accp.pojo.User">
+		SELECT *FROM USER WHERE
+		auditStatus=1 AND merchantType!=0
+		ORDER BY merchantRegistrationTime DESC
+	</select>
+	<select id="queryAllPut" resultType="com.accp.vo.cm.PutVo">
+		SELECT *,(SELECT userName FROM USER WHERE userid=`Putforward`.`userID`) AS userName FROM Putforward
+		WHERE auditStatus=1
+		ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllLogistics"
+		resultType="com.accp.pojo.Logistics">
+		SELECT *FROM Logistics WHERE auditStatus=1 ORDER BY orderTime DESC
+	</select>
+	<select id="queryAllBond" resultType="com.accp.vo.cm.BondVo">
+		SELECT *,(SELECT userName FROM USER WHERE userid=`Bond`.`userID`) AS userName FROM `Bond`
+		WHERE auditStatus=1 ORDER BY submitTime DESC
+	</select>
+	<select id="queryAllPost" resultType="com.accp.vo.cm.PostVoCm">
+		SELECT *,(SELECT userName FROM `USER` WHERE userid=`Post`.`userID`) AS userName FROM Post WHERE
+		auditStatus=1 AND operatingState!=2 ORDER BY releaseTime DESC
+	</select>
+	<select id="queryAllRefund" resultType="com.accp.vo.cm.RefVo">
+		SELECT *,(SELECT userName FROM `USER` WHERE userid=`Refund`.`userID`) AS userName FROM Refund WHERE
+		auditStatus=1 AND POINT=2
+	</select>
+</mapper>

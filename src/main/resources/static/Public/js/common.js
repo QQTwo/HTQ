@@ -478,7 +478,7 @@ function sendsms(){
 		$.ajax({
 			data: {thesender:_uid,content:_content,newstype:2,messagegroup:2},
 			type: "post",
-			url: '/c/gsq//user/saveZnx',
+			url: '/c/gsq/user/saveZnx',
 			dataType: 'json',
 			success: function(res){
 			
@@ -558,7 +558,7 @@ function toshipsuccess(_lid){
 			$('.com_pop_box').hide();
 			$('#pop_bg').hide();
 		});
-	});
+	})
 	
 	function changechk(){
 		$('#chkimg').attr('src','/index.php?m=Home&c=Index&a=verify&t='+(new Date().getTime()));

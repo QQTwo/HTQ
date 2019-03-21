@@ -4,11 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.cm.IAreaDao">
 	<select id="queryAllArea" resultType="com.accp.pojo.Sharea">
-		SELECT *FROM sharea WHERE
+		SELECT * FROM sharea WHERE
 		pid=#{pid}
-	</select>
-	<select id="queryById" resultType="com.accp.pojo.Sharea">
-		SELECT *FROM sharea WHERE
-		areaid=#{id}
 	</select>
 </mapper>

@@ -41,4 +41,8 @@ public class MemberActionL {
 		}
 		return biz.findUserShop(userName, shopName, merchantType, pageNum);
 	}
+	@GetMapping("/userShopxq/{userID}")
+	public UserVo findUserShopxq(@PathVariable int userID){
+		return biz.findUserShopxq(userID);
+	}
 }

@@ -22,7 +22,7 @@
 	</head>
 
 	<body>
-		<div class="">
+		<div class="" id="updateRecommentVm">
 			<div class="col-lg-12 col-xs-12 back" style="background-color: #f2f2f2;">
 				<p style="font-weight: bold;padding-top: 10px;">商家服务推荐信息</p>
 			</div>
@@ -38,72 +38,75 @@
 						</TR>
 						<TR>
 							<TD align=right>店铺名称:</TD>
-							<TD>微笑</TD>
+							<TD v-text="membersPageInfo.shopName">微笑</TD>
 							<TD align="right">保证金:</TD>
-							<TD>500</TD>
+							<TD v-text="membersPageInfo.guaranteeMoney">0</TD>
 						</TR>
-
+						
 						<TR>
 							<TD align="right">所在城市:</TD>
-							<TD colspan="3"></TD>
+							<TD colspan="3" v-text="membersPageInfo.adDetail"></TD>
 						</TR>
 						<TR>
 							<TD align=right>QQ:</TD>
-							<TD>2501509959</TD>
+							<TD v-text="membersPageInfo.adDetail">2501509959</TD>
 							<TD align="right">微信:</TD>
-							<TD>Y2501509958</TD>
+							<TD v-text="membersPageInfo.weChat">Y2501509958</TD>
 
 						</TR>
 
 						<TR style="display:;">
 							<TD  align=right>店铺状态:</TD>
 							<TD colspan="3">
-								<label> 开启</label>
-								<label> </label>
-								<label> </label>
+								<label v-if="membersPageInfo.businessState==1">营业</label>
+								<label style="width:10px;"> </label>
+								<label v-if="membersPageInfo.businessState==2">暂停</label>
+								<label style="width:10px;"> </label>
+								<label v-if="membersPageInfo.businessState==3">关闭</label>
 							</TD>
 						</TR>
 						<TR>
 							<TD width="18%" align=right noWrap> 注册时间:</TD>
-							<TD width="32%">
+							<TD width="32%" v-text="membersPageInfo.userRegistrationTime">
 								2019-02-20 10:09 </TD>
 							<TD width="18%" align="right">注册 IP:</TD>
-							<TD width="32%">106.18.85.151</TD>
+							<TD width="32%" v-text="membersPageInfo.registerIP">106.18.85.151</TD>
 						</TR>
 						<TR>
 							<TD  align=right>最后登录时间:</TD>
-							<TD>
+							<TD v-text="membersPageInfo.recentEntry">
 								2019-03-08 16:00 </TD>
 							<TD align="right">最后登录IP:</TD>
-							<TD></TD>
+							<TD v-text="membersPageInfo.lastEntry"></TD>
 						</TR>
 						<TR>
 
 							<TR>
 								<TD  align=right>服务类别:</TD>
-								<TD colspan="3">
+								<TD colspan="3" v-text="membersPageInfo.stName">
 									自驾游 </TD>
 							</TR>
 							<TR>
 								<TD  align=right>服务类别图片(首页推荐栏目展示):</TD>
-								<TD colspan="3"><img src="/Uploads/image/2019-03/20190302030550-37149.jpg" width="150" /></a>
+								<!-- src="/Uploads/image/2019-03/20190302030550-37149.jpg" -->
+								<TD colspan="3"><img  width="150" :src="membersPageInfo.serviceCoverImg"/></a>
 								</TD>
 							</TR>
 							<TR>
 								<TD align=right>店铺服务推荐:</TD>
 								<TD colspan="3">
 									<label>
-                  			<input name="is_recommend" type="radio" value="1"  />推荐</label>
+                  			<input name="is_recommend" type="radio" value="1" v-model="membersPageInfo.recommendBool" />推荐</label>
                   			<label style="width: 15px;"></label>
 									<label>
-                  			<input type="radio" name="is_recommend" value="0"  checked/>不推荐</label>
+                  			<input type="radio" name="is_recommend" value="0" v-model="membersPageInfo.recommendBool" />不推荐</label>
 								</TD>
 							</TR>
 							<tr>
-			            <TD><input type="hidden" name="id" value="61"></TD>
+			            <TD><input type="hidden" name="id" v-model="membersPageInfo.serviceID"></TD>
 			            <td colspan="1"></td>
 			            <TD colspan="1" style="text-align: right;">
-			            	<button type="button"  class="btn btn-success">保存</button>
+			            	<button type="button"  class="btn btn-success" @click="update($event)">保存</button>
 			            </TD>
 			            <TD colspan="1" >
 			            	<button type="button"  class="btn btn-default" onClick="history.go(-1)">返回</button>
@@ -121,5 +124,56 @@
 	<script src="../../js/jquery-1.12.4.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	var serviceID=window.sessionStorage.getItem("serviceID");
+	var listVm = new Vue({
+		el: "#updateRecommentVm",
+		data: {
+			//商家推荐信息
+			membersPageInfo: {}
+			
+		},
 
+		//方法
+		methods: {
+			//审核是否推荐
+			update:function(e){
+				var _membersPageInfo=this.membersPageInfo;
+				$.ajax({
+					url : "/c/cmmember/updateRecomment",
+					type:"put",
+					dataType:"json",
+					contentType:"application/json",
+					data:JSON.stringify(_membersPageInfo),
+					success:function(json){
+						if(json.code==200){
+							alert("推荐审核成功！");
+							location.href="shopperRecomend.html";
+						}else{
+							
+						}
+					}
+				})
+			}
+		},
+
+		//组件创建
+		created: function() {
+			$.ajax({
+				url : "/c/cmmember/loadshopRe",
+				type : "get",
+				dataType : "json",
+				data:{
+					"serviceID":serviceID
+				},
+				success:function(data){
+					
+					listVm.membersPageInfo = data;
+					console.log(data);
+				}
+			})
+			
+		}
+	});
+</script>
 </html>

@@ -32,4 +32,7 @@ public class MemberBizL {
 		PageHelper.startPage(pageNum,20);
 		return new PageInfo<UserVo>(dao.queryShop(userName, shopName, merchantType));
 	}
+	public UserVo findUserShopxq(int userID){
+		return dao.queryShopxq(userID);
+	}
 }

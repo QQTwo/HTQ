@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="/Public/css/common.css" />
 		<script type="text/javascript" src="/Public/js/jquery-1.8.3.min.js"></script>
+		<script src="/Public/js/layer/layer.js"></script>
 		<style type="text/css">
 			.yy_code .time1 {
 				color: red;
@@ -63,7 +64,7 @@
 					<li id="li3">
 						<a href="">账户设置</a><span class="my_nav_i"></span></li>
 					<li id="li4">
-						<a href="">消息</a><span class="my_nav_i"></span></li>
+						<a href="">消息<span class="msg_num">5</span></a><span class="my_nav_i"></span></li>
 				</ul>
 			</div>
 		</div>
@@ -169,7 +170,7 @@
 									<p>
 										<a th:if="${temp.orderstatus!=6&&temp.orderstatus!=7}" th:href="@{/c/gsq/order/query/detail(orderid=${temp.orderid})}">查看详细</a>
 										<span th:if="${temp.orderstatus>1&&temp.orderstatus!=6}" class="ht_line2"></span>
-										<a th:if="${temp.orderstatus>1&&temp.orderstatus!=6}" href="" rel="303">站内信商家</a>
+										<a th:if="${temp.orderstatus>1&&temp.orderstatus!=6}" href="javascript:void(0);" class="znx" rel="303" th:attr="name=${temp.service.user.shopname},id=${temp.service.user.userid}">站内信商家</a>
 									</p>
 								</li>
 							</ul>
@@ -259,10 +260,11 @@
 			</dt>
 				<dd>
 					<input type="hidden" id="smsuid" value="" />
+						<input type="hidden"	id="addressee" value="" />
 					<textarea class="input_c in_site_text" id="smsmsg"></textarea>
 					<div class="member_bt_btm2">
-						<a href="" class="btna_acancel">取消</a>
-						<a href="" onclick="sendsms()">发送</a>
+						<a href="javascript:void(0);" class="btna_acancel">取消</a>
+						<a href="javascript:void(0);" onclick="sendsms()">发送</a>
 					</div>
 				</dd>
 			</dl>
@@ -325,4 +327,21 @@
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-href.js"></script>
+<script src="/Public/js/common.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
+<script type="text/javascript">
+$(".znx").click(function(){
+	var name=$(this).attr("name");
+	var userid=$(this).attr("id");
+	$("#addressee").val(userid);
+	$(".mlr10").html(name);
+	$("#pop_bg").show();
+	$(".site_email_pop").show();
+})
+
+
+var userid=[[${session.USER.userid}]];
+
+initWebSocket(-1,userid);	
+</script>
 </html>

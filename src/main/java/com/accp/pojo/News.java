@@ -18,7 +18,7 @@ public class News {
     private Integer messagegroup;
 
     private String content;
-
+  
     public Integer getNewsid() {
         return newsid;
     }

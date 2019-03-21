@@ -2,6 +2,7 @@ package com.accp.action.xzc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +43,6 @@ public class tieziAction {
 		if(PageSize==null) {
 			PageSize=10;
 		}
-		System.out.println(fmname);
-		System.out.println(title);
 		PageInfo<postVo> pageinfo=ib.queryallpost(PageNum, PageSize,title,fmname);
 		return pageinfo;
 	}
@@ -51,7 +50,6 @@ public class tieziAction {
 	@ResponseBody
 	public List<Forummanagement> getinvitation() {
 		List<Forummanagement> listinfo=ib.queryfmname();
-		System.out.println(listinfo);
 		return listinfo;
 	}
 	@GetMapping("delete")
@@ -61,9 +59,9 @@ public class tieziAction {
 		return a;
 	}
 
-	@GetMapping("getgllist")
+	@GetMapping("getgllist/{PageNum}/{PageSize}")
 	@ResponseBody
-	public PageInfo<postglVo> gettzgl(Integer PageNum,Integer PageSize) {
+	public PageInfo<postglVo> gettzgl(@PathVariable Integer PageNum,@PathVariable Integer PageSize) {
 		if(PageNum==null) {
 			PageNum=1;
 		}
@@ -71,6 +69,16 @@ public class tieziAction {
 			PageSize=10;
 		}
 		PageInfo<postglVo> pageinfo=ib.queryglpost(PageNum, PageSize);
+		return pageinfo;
+	}
+	@GetMapping("getgllistxq/{fmid}")
+	@ResponseBody
+	public postglVo gettzglxq(@PathVariable Integer fmid) {
+		if(fmid==0) {
+			fmid=null;
+		}
+		System.out.println(fmid);
+		postglVo pageinfo=ib.queryglpostxq(fmid);
 		return pageinfo;
 	}
 	@GetMapping("gettslist")

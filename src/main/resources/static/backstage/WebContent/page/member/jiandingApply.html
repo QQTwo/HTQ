@@ -31,7 +31,7 @@
 			<blockquote class="back">
 			  <p style="font-weight: bold;padding-top: 10px;">鉴定申请</p>
 			    <div style="padding:0px 0px 12px 15px;font-size: 14px;">
-			    	用户名：<input type="text" value="" placeholder="" name="username">
+			    	真实姓名：<input type="text" value="" placeholder="" name="username">
 			    	<!-- Standard button -->
 					&nbsp;
 					状态：
@@ -74,14 +74,16 @@
   						<tr v-for="(temp,index) in membersPageInfo.list">
 					    	<td v-text="(index+1)">1</td>	
 					    	<td v-text="temp.username">ok</td>	
-					    	<td v-text="temp.shopname">普通会员</td>	
+					    	<td v-if="temp.merchantType==0">普通会员</td>
+					    	<td v-if="temp.merchantType==1">大陆商家用户</td>
+					    	<td v-if="temp.merchantType==2">海外商家用户</td>		
 					    	<td v-text="temp.name">1017009456@qq.com</td>	
 					    	<td v-if="temp.sex==1">男</td>	
 					    	<td v-if="temp.sex==2">女</td>
 					    	<td v-text="temp.phone">0</td>	
 					    	<td v-text="temp.submittime">0</td>	
-					    	<td v-if="temp.auditstatus==1">待审核</td>	
-					    	<td v-if="temp.auditstatus==2">已通过</td>	
+					    	<td v-if="temp.auditstatus==1" style="color:red">待审核</td>	
+					    	<td v-if="temp.auditstatus==2" style="color:green">已通过</td>	
 					    	<td v-if="temp.auditstatus==3">未通过</td>
 					    	<td v-text="temp.audittime">100</td>	
 					    		<td>
@@ -100,12 +102,12 @@
 								        	首页
 								      </a>
 								    </li>
-						    		<li>
+								    	<li v-if="membersPageInfo.hasPreviousPage==true">
 								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.prePage, membersPageInfo.pageSize)">
 								        	上一页
 								      </a>
 								    </li>
-								    <li>
+								     <li v-if="membersPageInfo.hasNextPage==true">
 								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.nextPage, membersPageInfo.pageSize)">
 								        	下一页
 								      </a>
@@ -115,6 +117,10 @@
 								       		 尾页
 								      </a>
 								    </li>
+								     <li>
+										第<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pages">5</span>页
+									</li>
 								</ul>
 							</td>
 						</tr>			
@@ -138,14 +144,20 @@
 		methods: {
 			goToPage: function(n, s) {
 				var auditstatus=0;
-				$.getJSON("/sj/jd/" + n + "/" + s +"/"+auditstatus, function(pageData) {
+				var name=null;
+				$.getJSON("/sj/jd/" + n + "/" + s +"/"+auditstatus+"/"+name, function(pageData) {
 					listVm.membersPageInfo = pageData;
+					console.log(pageData.list);
+					console.log(pageData);
 				}); 
 			},
 		 	//搜索
-			search:function(n, s,auditstatus){
-				var auditstatus=$("[name=status]").val();
-				$.getJSON("/sj/jd/" + n + "/" + s +"/"+auditstatus, function(pageData) {
+			search:function(n, s){
+				var name=$("[name=username]").val();
+				var auditstatus=$("#status").val();
+				alert(auditstatus)
+				$.getJSON("/sj/jd/" + n + "/" + s +"/"+auditstatus+"/"+name, function(pageData) {
+					console.log(pageData)
 					listVm.membersPageInfo = pageData;
 				});
 			},
@@ -155,7 +167,6 @@
 			},
 			updatesh:function(userid){
 				var sss = listVm;
-				alert(userid)
 				$.getJSON("/sj/jd/" +userid, function(a) {
 					sss.goToPage(1,10)
 				});

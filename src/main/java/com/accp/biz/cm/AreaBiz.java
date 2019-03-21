@@ -41,9 +41,6 @@ public class AreaBiz {
 	public List<Sharea> queryAllArea(Integer pid){
 		return dao.queryAllArea(pid);
 	}
-	//
-	public List<Sharea> queryById(Integer id){
-		return dao.queryById(id);
-	}
+	
 	
 }

@@ -30,7 +30,7 @@ import com.accp.vo.gsq.TimeOutEmailDateVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-@Service
+@Service("UserBiz")
 @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
 public class UserBiz {
 	@Autowired
@@ -168,7 +168,7 @@ public class UserBiz {
 	 */
 	public PageInfo<NewsVo>  queryZnxNewsPageInfo(Integer userID,Integer pageNum,Integer pageSize){
 		PageHelper.startPage(pageNum, pageSize);
-		return new PageInfo<>(dao.queryZnxNews(userID));
+		return new PageInfo<NewsVo>(dao.queryZnxNews(userID));
 	}
 	/**
 	 * 修改站内信信息
@@ -176,8 +176,8 @@ public class UserBiz {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public int updateZnxNews(String groupID) {
-		return dao.updateZnxNews(groupID);
+	public int updateZnxNews(String theSender,String addressee) {
+		return dao.updateZnxNews(theSender,addressee);
 	}
 	/**
 	 * 删除站内信
@@ -185,16 +185,16 @@ public class UserBiz {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public int deleteZnxNews(String groupID) {
-		return dao.deleteZnxNews(groupID);
+	public int deleteZnxNews(String theSender,String addressee) {
+		return dao.deleteZnxNews(theSender,addressee);
 	}
 	/**
 	 * 查询站内信详情
 	 * @param userID
 	 * @return
 	 */
-	public List<NewsVo> queryZnxXq(String groupID){
-		return dao.queryZnxXq(groupID);
+	public List<NewsVo> queryZnxXq(String groupID,int thesender,int addressee){
+		return dao.queryZnxXq(groupID,thesender,addressee);
 	}
 	/**
 	 * 新增站内信
@@ -335,5 +335,12 @@ public class UserBiz {
 			}
 		}
 		return tj;
+	}
+	/**
+	 * 查询未读信息（全部为0 系统1 站内信2）
+	 * @return
+	 */
+	public int selectNoReader(Integer newstype,Integer userid) {
+		return dao.selectNoReader(newstype,userid);
 	}
 }

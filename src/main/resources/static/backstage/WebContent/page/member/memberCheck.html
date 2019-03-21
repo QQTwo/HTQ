@@ -67,11 +67,11 @@
 					    	<td v-text="temp.userintegral">0</td>	
 					    	<td v-text="temp.usermoney">100</td>	
 					    	<!-- v-if判断状态 -->
-					    	<td v-if="temp.mailboxverification==0" style="color:#f00">未验证</td>	
-					    	<td v-if="temp.mailboxverification==1">已验证</td>	
-					    	<td v-if="temp.auditstatus==1" style="color:red">待审核</td>	
-					    	<td v-if="temp.auditstatus==2">通过</td>	
-					    	<td v-if="temp.auditstatus==3">拒绝</td>	
+					    	<td v-if="temp.mailboxverification==1" style="color:#f00">未激活</td>	
+					    	<td v-if="temp.mailboxverification==0">已激活</td>	
+					    	<td v-if="temp.auditstatus==0" style="color:red">待审核</td>	
+					    	<td v-if="temp.auditstatus==1">通过</td>	
+					    	<td v-if="temp.auditstatus==2">拒绝</td>	
 					    	<td>开启</td>	
 					    	<td v-text="temp.userphone">18596230152</td>	
 					    	<td v-text="temp.recententry">2018-01-12 11:20</td>	
@@ -145,6 +145,7 @@
 			goToPage: function(n, s) {
 				$.getJSON("/c/cmmember/users/" + n + "/" + s + "/0", function(pageData) {
 					listVm.membersPageInfo = pageData;
+					console.log(listVm.membersPageInfo);
 				});
 			},
 			//搜索

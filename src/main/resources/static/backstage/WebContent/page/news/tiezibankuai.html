@@ -3,60 +3,146 @@
 <head>
 	<meta charset="utf-8">
 	<title>文章列表--layui后台管理模板</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
-	<link rel="stylesheet" href="../../css/news.css" media="all" />
-</head>
-<body class="childrenBody">
-	<blockquote class="layui-elem-quote news_search">
-		<div class="layu-inline">
-		    <div class="layu-input-inline">
-		    	<span style="font-size: 22px;">帖子版块管理</span>
-		    	<div style="float: right;">
-		    	<a style="font-size: 16px;" class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="1"></i>更新</a>
-		    	</div>
-		    	<div style="float: right;">
-		    	<a style="font-size: 16px;" class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="1"></i>新增栏目</a>
-		    	</div>
-		    </div>
-		    
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			.container{
+				font-size: 14px;
+			}
+			.back{
+				font-size: 14px;
+				border-radius:0 2px 2px 0;
+				background-color:#f2f2f2;
+				padding:2px 10px;
+				border-left: 5px solid rgb(25,159,147);
+			}
+			table thead tr>th,tr>td{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：1017009135@qq.com
+        	时间：2019-03-10
+        	描述：首先默认是加载根据id传过来的数据，可根据下拉进行条件查询
+        -->
+		<div class="" id="listVm">
+			<blockquote class="back">
+			  <p style="font-weight: bold;padding-top: 10px;">帖子板块管理</p>
+			    <div style="padding:0px 0px 12px 15px;font-size: 14px;">
+			    	<!-- Standard button -->
+			    </div>
+			</blockquote>
+			<div class="col-md-12 col-xs-12"> </div>
+			<div>
+				<table class="table table-bordered">
+					<thead style="background-color:#f2f2f2;">
+  						<TR>
+		                    <th>ID</th>
+		                    <TH>排序</TH>
+		                    <TH >栏目名称</TH>
+		                    <TH>是否需要审核</TH>
+		                    <TH>是否赠送积分</TH>
+		                    <TH>版主</TH>
+		                    <TH>操作</TH>
+		                  </TR>
+  					</thead>
+  					<!--
+                      	作者：1017009135@qq.com
+                      	时间：2019-03-10
+                      	描述：tbody 可对用户id进行判断，从而循环
+                      -->
+  					 <tbody>
+  						<tr v-for="(temp,index) in membersPageInfo.list">
+					    	<td v-text="temp.fmid">1</td>	
+					    	<td v-text="temp.sort">ok</td>	
+					    	<td v-text="temp.fmname">ok</td>	
+					    	<td v-if="temp.auditstatus==1"><span style="color:red">要审核</span></td>
+					    	<td v-if="temp.auditstatus==2"><span style="color:green">不要审核</span></td>
+					    	<td v-if="temp.giftintegral==1"><span style="color:green">赠送</span></td>	
+					    	<td v-if="temp.giftintegral==2"><span style="color:red">不增送</span></td>
+					    	<td v-text="temp.name">0</td>	
+					    		<td>
+					    		<a><a class="btn btn-default btn-xs  memberCheck_edit" @click="updatesh(temp.fmid)"><span class="glyphicon glyphicon-edit"></span> 修改</a></a>	
+					    		<!-- <a><a class="btn btn-default btn-xs  memberCheck_edit" @click="memberEdita(temp.fmid)"><span class="glyphicon glyphicon-edit"></span> 删除</a></a>	 -->
+					    	</td>	
+					    </tr>
+  					</tbody>
+  					<tfoot>
+  						<tr>
+							<td colspan="10">
+								<ul class="pager">
+									<li>
+										<!--@click="goToPage(1,emailsPageInfo.pageSize)"-->
+								      <a href="javascript:void(0)" @click="goToPage(1,membersPageInfo.pageSize)">
+								        	首页
+								      </a>
+								    </li>
+								    	<li v-if="membersPageInfo.hasPreviousPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.prePage, membersPageInfo.pageSize)">
+								        	上一页
+								      </a>
+								    </li>
+								     <li v-if="membersPageInfo.hasNextPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.nextPage, membersPageInfo.pageSize)">
+								        	下一页
+								      </a>
+								    </li>
+								    <li>
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.lastPage,membersPageInfo.pageSize)">
+								       		 尾页
+								      </a>
+								    </li>
+								     <li>
+										第<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pages">5</span>页
+									</li>
+								</ul>
+							</td>
+						</tr>			
+  					</tfoot>
+				</table>
+			</div>
 		</div>
-	</blockquote>
-	<div class="layui-form news_list">
-	  	<table class="layui-table">
-		    <colgroup >
-				<col width="20">
-				<col width="5%">
-				<col width="20%">
-				<col width="30%">
-				<col width="15%">
-				<col width="7%">
-				<col width="7%">
-				<col width="20%">
-		    </colgroup>
-		    <thead>
-				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">ID</th>
-					<th>排序</th>
-					<th>栏目名称</th>
-					<th>审核</th>
-					<th>赠送积分</th>
-					<th>版主</th>
-					<th>操作</th>
-				</tr> 
-		    </thead>
-		    <tbody id="li"></tbody>
-		</table>
-	</div>
-	<div id="page"></div>
-	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="tieziguanli.js"></script>
-</body>
+	</body>
+	<script src="../../js/jquery-1.12.4.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	var listVm = new Vue({
+		el: "#listVm",
+		data: {
+			//会员信息
+			membersPageInfo: {},
+		},
+
+		//方法
+		methods: {
+			goToPage: function(n, s) {
+				//加载页面数据
+				$.ajax({
+					url : "/tz/getgllist/"+n+"/"+s,
+					type : "get",
+					dataType : "json",
+					success:function(data){
+						console.log(data.list);
+						listVm.membersPageInfo = data;
+					}
+				});
+			},
+			updatesh:function(fmid){
+				window.sessionStorage.setItem("fmid", fmid);
+				window.location.href="bkgl_updata.html";
+			}
+		},
+
+		//组件创建
+		created: function() {
+			this.goToPage(1, 10);
+			
+			//加载金币数和积分
+		}
+	});
+	</script>
 </html>

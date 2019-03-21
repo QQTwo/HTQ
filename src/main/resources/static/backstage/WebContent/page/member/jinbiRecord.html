@@ -47,6 +47,7 @@
 							<TH>类型</TH>
 							<TH>获取方式</TH>
 							<TH>消费</TH>
+							<th>充值</th>
 							<TH>状态</TH>
 							<TH>备注</TH>
 							<TH>消费时间</TH>
@@ -60,7 +61,7 @@
                      <tbody>
   						<tr v-for="(temp,index) in user.list">
 					    	<td v-text="(index+1)">1</td>	
-					    	<td v-text="temp.userName">ok</td>	
+					    	<td v-text="temp.username">ok</td>	
 					    	<td >金币</td>	
 					    	<td v-if="temp.acquisitionMode==1">预定服务</td>	
 					    	<td v-if="temp.acquisitionMode==2">服务收益</td>	
@@ -70,43 +71,54 @@
 					    	<td v-if="temp.acquisitionMode==6">线下充值</td>
 					    	<td v-if="temp.acquisitionMode==7">退款</td>	
 					    	<td v-if="temp.acquisitionMode==8">提现</td>	
-					    	<td v-text="temp.recordInAndOut">0</td>	
-					    	<td v-if="temp.auditStatus==1"><span></span>待审核</td>	
-					    	<td v-if="temp.auditStatus==2">已通过</td>	
-					    	<td v-if="temp.auditStatus==3">未通过</td>
+					    	<td>
+					    	<span class="mo1" v-if="temp.recordInAndOut<0" v-text="temp.recordInAndOut"></span>
+								<span class="mo1" v-if="temp.recordInAndOut>0">-</span> 
+					    	</td>
+					    	<td>
+					    	<span class="mo1" v-if="temp.recordInAndOut<0">-</span>
+								<span class="mo1" v-if="temp.recordInAndOut>0" v-text="temp.recordInAndOut">-</span> 
+					    	</td>
+					    	<td v-if="temp.auditstatus==1"><span></span>待审核</td>	
+					    	<td v-if="temp.auditstatus==2">已通过</td>	
+					    	<td v-if="temp.auditstatus==3">未通过</td>
 					    	<td v-text="temp.recordDescribe">100</td>	
 					    	<td v-text="temp.recordDate">100</td>	
 					    </tr>
   					</tbody>
 					<tfoot>
-						<tr>
-							<td colspan="13">
+  						<tr>
+							<td colspan="10">
 								<ul class="pager">
 									<li>
 										<!--@click="goToPage(1,emailsPageInfo.pageSize)"-->
-										<a href="javascript:void(0)">
-											首页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											上一页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											下一页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											尾页
-										</a>
+								      <a href="javascript:void(0)" @click="goToPage(1,user.pageSize)">
+								        	首页
+								      </a>
+								    </li>
+								    	<li v-if="user.hasPreviousPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(user.prePage, user.pageSize)">
+								        	上一页
+								      </a>
+								    </li>
+								     <li v-if="user.hasNextPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(user.nextPage, user.pageSize)">
+								        	下一页
+								      </a>
+								    </li>
+								    <li>
+								      <a href="javascript:void(0)"  @click="goToPage(user.lastPage,user.pageSize)">
+								       		 尾页
+								      </a>
+								    </li>
+								     <li>
+										第<span style="border: none;padding: 0 2px;" v-text="user.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="user.pages">5</span>页
 									</li>
 								</ul>
 							</td>
-						</tr>
-					</tfoot>
+						</tr>			
+  					</tfoot>
 				</table>
 			</div>
 		</div>

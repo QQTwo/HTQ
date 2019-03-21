@@ -24,36 +24,36 @@
 		</style>
 	</head>
 	<body>
-		<div class="">
-			<blockquote class="back">
+		<div class="" id="shopRecommentVm">
+			<blockquote class="back" style="width:1366px">
 			  <p style="font-weight: bold;padding-top: 10px;">商家推荐</p>
 			    <div style="padding:0px 0px 12px 15px;font-size: 14px;">
-			    	用户昵称：<input type="text" value="" placeholder="" name="nickname">
+			    	用户昵称：<input type="text" value="" placeholder="" name="userName">
 					&nbsp;
-					店铺名称：<input type="text" value="" placeholder="" name="nickname">
+					店铺名称：<input type="text" value="" placeholder="" name="shopName">
 					&nbsp;
 					会员组：
-					<select name="huiyuangroup">
-			    		<option value="0">所有</option>
-	                    <option value="2">大陆商家用户</option>
-	                    <option value="3">海外商家用户</option>   
+					<select name="merchantType" style="height:2rem">
+			    		<option value="-1">所有</option>
+	                    <option value="1">大陆商家用户</option>
+	                    <option value="2">海外商家用户</option>   
 		    		</select>
 		    		&nbsp;
 		    		是否推荐：
-		    		<select name="is_recommend" id="is_recommend">
-	                    <option value="">所有</option>
-	                    <option value="0">推荐</option>
+		    		<select name="is_recommend" id="is_recommend" style="height:2rem">
+	                    <option value="-1">所有</option>
+	                    <option value="1">推荐</option>
 	                    <option value="0">不推荐</option>
                		</select>
 					&nbsp;
-					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search()">
+					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search('1','10')">
 						查询</button>
 					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;">导出</button>
 			    </div>
 			</blockquote>
 			<div class="col-md-12 col-xs-12"> </div>
 			<div>
-				<table class="table table-bordered">
+				<table class="table table-bordered" style="width:1366px">
 					<THEAD style="background-color:#f2f2f2;">
 	                <TR>
 	                    <th>序号</th>
@@ -68,115 +68,31 @@
 	                </TR>
                 	</THEAD>
 					 <tbody>
-                <tr>
-                        <td>
-                            1                        </td>
-                        <td>qwqw</td>
-						<td>仙女聚集之地</td>
-                        <td>自驾游</td>
-                        <td>大陆商家用户</td>
-
-                        <td>18574787115</td>
-                        <td>
-                            <span style="color:lightcoral;">暂停</span>                        </td>
-                        <td>
-                            <span style="color:red;">是</span>                        </td>
-                        <td>
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/487.html">修改</a>　
+                <tr v-for="(temp,index) in membersPageInfo.list">
+                        <td v-text="(index+1)">
+                            1                        
                         </td>
-                    </tr><tr>
+                        <td v-text="temp.userName">qwqw</td>
+						<td v-text="temp.shopName">仙女聚集之地</td>
+                        <td v-text="temp.stName">自驾游</td>
+                        <td v-if="temp.merchantType==1">
+                        	大陆商家用户
+                        </td>
+						<td v-if="temp.merchantType==2">
+                        	海外商家用户
+                        </td>
+                        <td v-text="temp.merchantPhone">18574787115</td>
                         <td>
-                            2                        </td>
-                        <td>独白</td>
-						<td align="center" nowrap>微笑</td>
-                        <td align="center" nowrap>自驾游</td>
-                        <td align="center" nowrap>大陆商家用户</td>
-
-                        <td align="center" nowrap>17373315022</td>
-                        <td align="center" nowrap>
-                            <span>开启</span>                        </td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">否</span>                        </td>
-                        <td nowrap >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/475.html">修改</a>　
-                        </td>
-                    </tr><tr>
-                        <td align="center" bgcolor="#ffffff">
-                            3                        </td>
-                        <td align="center" nowrap>时♂钟✓©©</td>
-						<td align="center" nowrap>gauysg</td>
-                        <td align="center" nowrap>自驾游</td>
-                        <td align="center" nowrap>海外商家用户</td>
-
-                        <td align="center" nowrap>1234567890</td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">暂停</span>                        </td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">否</span>                        </td>
-                        <td nowrap >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/455.html">修改</a>　
-                        </td>
-                    </tr><tr>
-                        <td align="center" bgcolor="#ffffff">
-                            4                        </td>
-                        <td align="center" nowrap>时♂钟✓©©</td>
-						<td align="center" nowrap>gauysg</td>
-                        <td align="center" nowrap>自驾游</td>
-                        <td align="center" nowrap>海外商家用户</td>
-
-                        <td align="center" nowrap>1234567890</td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">暂停</span>                        </td>
-                        <td align="center" nowrap>
-                            <span style="color:red;">是</span>                        </td>
-                        <td nowrap >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/455.html">修改</a>　
-                        </td>
-                    </tr><tr>
-                        <td align="center" bgcolor="#ffffff">
-                            5                        </td>
-                        <td align="center" nowrap>万家灯火</td>
-						<td align="center" nowrap>不告诉你</td>
-                        <td align="center" nowrap>自驾游</td>
-                        <td align="center" nowrap>大陆商家用户</td>
-
-                        <td align="center" nowrap>12345678900</td>
-                        <td align="center" nowrap>
-                            <span>开启</span>                        </td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">否</span>                        </td>
-                        <td nowrap >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/450.html">修改</a>　
-                        </td>
-                    </tr><tr>
-                        <td align="center" bgcolor="#ffffff">
-                            6                        </td>
-                        <td align="center" nowrap>亡徒</td>
-						<td align="center" nowrap>日本一日游</td>
-                        <td align="center" nowrap>自驾游</td>
-                        <td align="center" nowrap>大陆商家用户</td>
-
-                        <td align="center" nowrap>13077037380</td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">暂停</span>                        </td>
-                        <td align="center" nowrap>
-                            <span style="color:lightcoral;">否</span>                        </td>
-                        <td nowrap >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/3/userid/432.html">修改</a>　
-                        </td>
-                    </tr><tr>
-                        <td>7</td>
-                        <td >阿giao</td>
-						<td>xxx</td>
-                        <td>留学中介</td>
-                        <td>大陆商家用户</td>
-                        <td>15197398630</td>
+                        	<span v-if="temp.businessState==1" style="color:green">营业</span>
+                            <span v-if="temp.businessState==2" style="color:color;">暂停</span>
+                            <span v-if="temp.businessState==3">关闭</span>                       
+                          </td>
                         <td>
-                            <span style="color:lightcoral;">暂停</span> </td>
+                            <span v-if="temp.recommendBool==1" style="color:red;">是</span>                       
+                             <span v-if="temp.recommendBool==0">否</span>
+                             </td>
                         <td>
-                            <span style="color:red;">是</span></td>
-                        <td >
-                        <a href="/index.php/Admincp/User/recommendedit/catid/5/userid/429.html">修改</a>　
+                        <a href="javascript:void(0)" @click="updateInfo(temp.serviceID)">修改</a>
                         </td>
                     </tr>
                     </tbody>
@@ -186,25 +102,29 @@
 								<ul class="pager">
 									<li>
 										<!--@click="goToPage(1,emailsPageInfo.pageSize)"-->
-								      <a href="javascript:void(0)" >
+								      <a href="javascript:void(0)" @click="goToPage(1,membersPageInfo.pageSize)">
 								        	首页
 								      </a>
 								    </li>
-						    		<li>
-								      <a href="javascript:void(0)" >
+						    		<li v-if="membersPageInfo.hasPreviousPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.prePage, membersPageInfo.pageSize)">
 								        	上一页
 								      </a>
 								    </li>
-								    <li>
-								      <a href="javascript:void(0)" >
+								    <li v-if="membersPageInfo.hasNextPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.nextPage, membersPageInfo.pageSize)">
 								        	下一页
 								      </a>
 								    </li>
 								    <li>
-								      <a href="javascript:void(0)">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.lastPage,membersPageInfo.pageSize)">
 								       		 尾页
 								      </a>
 								    </li>
+								    <li>
+										第<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pages">5</span>页
+									</li>
 								</ul>
 							</td>
 						</tr>				
@@ -216,4 +136,76 @@
 	<script src="../../js/jquery-1.12.4.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	
+	var listVm = new Vue({
+		el: "#shopRecommentVm",
+		data: {
+			//商家推荐信息
+			membersPageInfo: {}
+			
+		},
+
+		//方法
+		methods: {
+			goToPage: function(n, s) {
+				$.ajax({
+					url : "/c/cmmember/shopRecomment",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":"",
+						"merchantType":"-1",
+						"shopName":"",
+						"recommendbool":"-1",
+            			"num":n,
+            			"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+						console.log(data);
+					}
+				})
+			},
+			//搜索
+			search:function(n,s){
+				var userName=$("[name=userName]").val();
+				var merchantType=$("[name=merchantType]").val();
+				var shopName=$("[name=shopName]").val();
+				var is_recommend=$("[name=is_recommend]").val();
+				$.ajax({
+					url : "/c/cmmember/shopRecomment",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":userName,
+						"merchantType":merchantType,
+						"shopName":shopName,
+						"recommendbool":is_recommend,
+            			"num":n,
+            			"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+						$("[name=userName]").val('');
+						$("[name=merchantType]").val('-1');
+						$("[name=shopName]").val('');
+						$("[name=is_recommend]").val('-1');
+					}
+				})
+			},
+			//编辑
+			updateInfo:function(serviceID){
+				window.sessionStorage.setItem("serviceID", serviceID);
+				window.location.href="shopperRecomend_update.html";
+			}
+		},
+
+		//组件创建
+		created: function() {
+			this.goToPage(1, 10);
+			
+		}
+	});
+</script>
 </html>

@@ -28,19 +28,20 @@
 	</head>
 
 	<body>
-		<div class="">
+		<div class="" id="baozhengjinVm">
 			<blockquote class="back">
 				<p style="font-weight: bold;padding-top: 10px;">保证金管理</p>
 				<div style="padding:0px 0px 12px 15px;font-size: 14px;">
-					用户名：<input type="text" value="" placeholder="" name="username"> &nbsp;
-					<select name="status">
-						<option value="">全部状态</option>
+					用户名：<input type="text" value="" placeholder="" name="userName"> 
+					&nbsp;&nbsp;
+					<select name="status" style="height:2rem;font-size:14px;">
+						<option value="0">全部状态</option>
 						<option value="1">待审核</option>
-						<option value="2">拒绝</option>
-						<option value="3">完成</option>
+						<option value="2">审核通过</option>
+						<option value="3">不通过</option>
 					</select>
 					&nbsp;
-					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search()">
+					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search('1','15')">
 						查询</button>
 				</div>
 			</blockquote>
@@ -63,30 +64,35 @@
 						</TR>
 					</THEAD>
 					<tbody>
-						<tr>
-							<td align="center">
-								1 <input value="" type="checkbox" name="favid[]" style="display:none;">
+						<tr v-for="(temp,index) in membersPageInfo.list">
+							<td align="center" v-text="(index+1)">
+								1 
 							</td>
 							<td align="center" nowrap>
-								<a href="javascript:void(0)" onclick="location.href='shopperManage_update.html'">魅力。解释一切♀</a>
+								<a href="javascript:void(0)"  v-text="temp.userName" onclick="location.href='shopperManage_update.html'">魅力。解释一切♀</a>
 							</td>
-							<td align="center" nowrap>店铺</TH>
+							<td align="center"  v-text="temp.shopName">店铺</TH>
 								<td align="center" nowrap>金币</td>
 								<td align="center" nowrap>保证金</td>
-								<td align="center" nowrap>
-									- </td>
-								<td align="center" nowrap>
-									+500.00 </td>
-								<td align="center" nowrap>
-									完成 </td>
-								<td align="center" nowrap>退保证金</td>
-								<td nowrap>2019-03-09 11:23</td>
+								<td align="center">
+									- <span v-text="temp.goldCoin" v-if="temp.auditStatus==3 ||temp.auditStatus==1 "></span>
+									</td>
+								<td align="center" >
+									+<span v-text="temp.goldCoin" v-if="temp.auditStatus==2"></span>
+									 </td>
+								<td align="center">
+									<span v-if="temp.auditStatus==1" style="color:red">待审核</span>
+									<span v-if="temp.auditStatus==2" style="color:green">完成</span>
+									<span v-if="temp.auditStatus==3">拒绝</span>
+								 </td>
+								<td align="center" v-text="temp.reviewNotes">退保证金</td>
+								<td v-text="temp.submitTime">2019-03-09 11:23</td>
 
-								<td nowrap>
-									<a href="javascript:void(0)" onclick="location.href='baozhengjin_detail.html'">查看</a>
+								<td v-if="temp.reviewNotes !='提交保证金' ||temp.reviewNotes =='' ">
+									<a href="javascript:void(0)" @click="show(temp.userID,temp.submitTime,temp.bID)">查看</a>
 								</td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td align="center">
 								2 <input value="" type="checkbox" name="favid[]" style="display:none;">
 							</td>
@@ -192,7 +198,7 @@
 								<td nowrap>2019-02-27 14:14</td>
 
 								<td nowrap>
-						</tr>
+						</tr> -->
 					</tbody>
 					<tfoot>
 						<tr>
@@ -200,28 +206,32 @@
 								<ul class="pager">
 									<li>
 										<!--@click="goToPage(1,emailsPageInfo.pageSize)"-->
-										<a href="javascript:void(0)">
-											首页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											上一页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											下一页
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">
-											尾页
-										</a>
+								      <a href="javascript:void(0)" @click="goToPage(1,membersPageInfo.pageSize)">
+								        	首页
+								      </a>
+								    </li>
+						    		<li v-if="membersPageInfo.hasPreviousPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.prePage, membersPageInfo.pageSize)">
+								        	上一页
+								      </a>
+								    </li>
+								    <li v-if="membersPageInfo.hasNextPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.nextPage, membersPageInfo.pageSize)">
+								        	下一页
+								      </a>
+								    </li>
+								    <li>
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.lastPage,membersPageInfo.pageSize)">
+								       		 尾页
+								      </a>
+								    </li>
+								    <li>
+										第<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pages">5</span>页
 									</li>
 								</ul>
 							</td>
-						</tr>
+						</tr>				
 					</tfoot>
 				</table>
 			</div>
@@ -230,5 +240,67 @@
 	<script src="../../js/jquery-1.12.4.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	var listVm = new Vue({
+		el: "#baozhengjinVm",
+		data: {
+			//保证金信息
+			membersPageInfo: {},
+			
+		},
 
+		//方法
+		methods: {
+			goToPage: function(n, s) {
+				$.ajax({
+					url : "/c/cmmember/baozhengjinList",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":"",
+						"auditStatus":0,
+						"num":n,
+            			"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+						console.log(data);
+					}
+				})
+			},
+			//搜索
+			search:function(n,s){
+				var userName=$("[name=userName]").val();
+				var auditStatus=$("[name=status]").val();
+				$.ajax({
+					url : "/c/cmmember/baozhengjinList",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":userName,
+						"auditStatus":auditStatus,
+						"num":n,
+            			"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+						$("[name=userName]").val('');
+						$("[name=status]").val('0');
+					}
+				})
+			},
+			show:function(userID,submitTime,bID){
+				var userID=window.sessionStorage.setItem("userID", userID);
+				var submitTime=window.sessionStorage.setItem("submitTime", submitTime);
+				var bID=window.sessionStorage.setItem("bID",bID);
+				location.href="baozhengjin_detail.html";
+			}
+		},
+
+		//组件创建
+		created: function() {
+			this.goToPage(1, 10);
+		}
+	});
+</script>
 </html>

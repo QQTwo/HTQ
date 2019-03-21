@@ -33,4 +33,16 @@
 				u.`merchantType`!=0
 		</where>
 	</select>
+	
+	<select id="queryShopxq" resultType="com.accp.vo.lzh.UserVo">
+		SELECT u.`userID`,u.`userName`,u.`mailboxVerification`,u.`userIntegral`,u.`userMoney`,l.`loginType`,
+		u.`auditStatus`,u.`userPhone`,u.`merchantType`,u.`recentEntry`,u.`shopName`,u.merchantEmail,u.businessState 
+		FROM `user` AS u
+		JOIN login AS l ON u.`userID`=l.`userID`
+		<where>
+			<if test="userID!=0">
+				 u.`userID` = #{userID}
+			</if>
+		</where>
+	</select>
 </mapper>

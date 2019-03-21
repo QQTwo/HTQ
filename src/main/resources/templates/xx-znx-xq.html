@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="/Public/css/common.css" />
 <script type="text/javascript" src="/Public/js/jquery-1.8.3.min.js"></script>
 <link rel="stylesheet" href="/Public/js/valid/css/validationEngine.jquery.css" type="text/css">
+ <link href="/Public/css/Websocket/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/Public/css/Websocket/chat.css">
+    <script src="/Public/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/js/Websocket/chat.js"></script>
 <style type="text/css">
 .edit_pohto dt img {
 	width: 120px;
@@ -89,23 +93,25 @@
 			</div>
 			<!--member left end-->
 			<!--member right-->
-			<div class="member_right site_msg_w">
+			<div class="member_right site_msg_w" >
 				<div class="member_system_r_top and_who">
-					<span>[[${news[0].Sender.shopname}]]</span>-<span>[[${news[0].Ressee.username}]]</span>对话中
+					<span style="color:orange;"></span>-<span style="color:orange;">[[${name}]]</span>对话中
 				</div>
 				
-				<div class="xqData">
-				<div class="date_line"><span class="date_line_time">[[${#dates.format(news[0].sendingtime, 'yyyy-MM-dd')}]]</span></div>			
+				<div class="xqData" style="height:400px;overflow: auto;">
+				 <div class="date_line">
+				<span class="date_line_time">[[${#dates.format(news[0].sendingtime, 'yyyy-MM-dd')}]]</span>
+				</div>	
 				<ul class="member_s_list_ul mslist_ul2" th:each="temp,iter :${news}">
 					 
-						<div th:if="${iter.index!=0}">
+						 <div th:if="${iter.index!=0}">
 							<div class="date_line" th:if="${#dates.format(news[iter.index-1].sendingtime,'yyyy-MM-dd')<#dates.format(temp.sendingtime,'yyyy-MM-dd')}"><span class="date_line_time">[[${#dates.format(temp.sendingtime, 'yyyy-MM-dd')}]]
 							</span></div>
 						</div>
-					 
-					<li>
+					  
+					<!-- <li>
 						<p class="bbs_user_photo">
-							<img th:src="${temp.Sender.userimgpath}" alt="梦的N次方-煎饼果子" />
+							<img th:src="${temp.Sender.userimgpath}" alt="ai-na" />
 						</p>
 						<div class="bbs_user_text">
 							<p class="email_con ec2">
@@ -116,9 +122,25 @@
 								<a href="javascript:void(0);" rel="2744" class="talk_del_a">删除</a>[[${temp.content}]]
 							</h3>
 						</div>
-					</li>
+					</li> -->
+					
+					 <div class="pnl-list" id="msgs">
+                            <div class="msg robot">
+                                <div class="msg-left">
+                                    <div class="msg-host photo" ><img  th:src="${temp.Sender.userimgpath}" alt="ai-na"></div>
+                                    <div class="msg-ball"  title="" th:if="${temp.thesender==addressee && temp.addressee==thesender}">[[${temp.content}]]</div>
+                                </div><!-- th:if="${temp.thesender==addressee && temp.addressee==thesender}" -->
+                            </div>
+                            <div class="msg guest" >
+                                <div class="msg-right"><!--th:if="${temp.thesender==addressee && temp.addressee==thesender}" Ressee  -->
+                                    <div class="msg-host headDefault"><img  th:src="${temp.Ressee.userimgpath}"></div>
+                                    <div class="msg-ball" title="" th:if="${temp.thesender==thesender && temp.addressee==addressee}">[[${temp.content}]]</div>
+                                </div>
+                            </div>
+                        </div>
+                       
 				</ul>
-			
+				 <div id="content"></div>
 				</div>
 		
 				<!--page-->
@@ -131,8 +153,8 @@
 					</div>
 				</div>
 				<!--page end-->
-
-				<div class="send_box">
+				<h3 style="color:orange;text-align: left">发送消息:</h3>
+				<div class="send_box" style="padding-top:10px">
 					<input type="hidden" id="smsuid" value="303" /> <input
 						type="hidden" id="reid" value="2804" />
 					<textarea class="text_area_2" id="smsmsg" name="content"></textarea>
@@ -143,7 +165,7 @@
 			</div>
 			<!--member right end-->
 
-
+			
 
 
 
@@ -192,9 +214,18 @@
 <script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript" src="/Public/js/noRead.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
 <script type="text/javascript" th:inline="javascript">
+
+
+
+
+ window.location.hash = "#content"; 
+
+ 
 weiduInfo();
 	$("[name=fasong]").click(function(){
+		
 		var content=$("[name=content]").val();
 		if(content==""){
 			alert("请输入发送内容！");
@@ -202,8 +233,24 @@ weiduInfo();
 		}
 		var newstype=2;
 		var messagegroup=[[${news[0].messagegroup}]];
-		var thesender=[[${param.thesender}]];
+		var thesender=[[${thesender}]];
+		var addressee=[[${addressee}]];
+		$.ajax({
+			url:"/c/gsq/user/saveZnx",
+			type:"post",
+			data:{
+				content:content,
+				newstype:newstype,
+				messagegroup:messagegroup,
+				thesender:thesender
+			},
+			success:function(data){
+				location.reload();
+			}
+		})
+		/* 
 		location.href="/c/gsq/user/saveZnx?content="+content+"&newstype="+newstype+"&messagegroup="+messagegroup+"&thesender="+thesender;
+	 */
 	})
 </script>
 

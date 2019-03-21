@@ -27,6 +27,8 @@ public interface ItieziDao {
 	public int insertfor(@Param("foru") Forummanagement foru);
 	//查询管理帖子
 	public List<postglVo> queryglall();
+	
+	public postglVo queryglallxq(@Param("fmid")int fmid);
 	//查询投诉帖子
 		public List<posttsVo> queryts(@Param("title")String title);
 		

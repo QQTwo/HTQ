@@ -19,7 +19,8 @@
 	</style>
 	</head>
 	<body>
-		<div class="">
+		<div class="" id="listVm">
+		<div class="" id="shopVm">
 			<div class="col-lg-12 col-xs-12 back" style="background-color: #f2f2f2;">
 			  <p style="font-weight: bold;padding-top: 10px;">会员信息</p>
 			</div>
@@ -34,66 +35,74 @@
 					 <TBODY>
 			          <TR>
 			            <TD width="18%" align=right noWrap><strong>会员组:</strong></TD>
-			            <TD  width="32%" noWrap>
-			              <label for="group_id"></label>
-			              	大陆商家用户                
-			              	<select name="group_id" id="group_id" style="display:none;">
-			                  <option value="1" >普通会员</option>
-			                  <option value="2" selected>大陆商家用户</option>
-			                  <option value="3" >海外商家用户</option>              
-			              	</select>
-			            </TD>
+			            <TD v-if="user.merchantType==1" >大陆商家</TD>
+			            <TD v-if="user.merchantType==2" >海外商家</TD>
+			            <TD width="32%" >
+								<label v-if="userInfo.merchantType==1">大陆商家用户</label>
+								<label v-if="userInfo.merchantType==2">海外商家用户</label> 
+								<select name="group_id" id="group_id" style="display:none;">
+									<option value="0" selected>普通会员</option>
+									<option value="1">大陆商家用户</option>
+									<option value="2">海外商家用户</option>
+								</select>
+						</TD>
 			            <TD width="18%"  align=right>&nbsp;</TD>
 			            <TD width="32%" >&nbsp;</TD>
 			          </TR>
 			          <TR>
 			            <TD  align=right >用户名:</TD>
-			            <TD  >qwqw</TD>
+			            <TD  v-text="user.username">qwqw</TD>
+			            <TD  align=right>密码:</TD>	
+			            <TD  ><input id="password" size=20 type="text" name="password" v-model="user.userPwd"></TD>
+			            <TD v-text="userInfo.userName">qwqw</TD>
 			            <TD  align=right>密码:</TD>
 			            <TD  ><input id="password" size=20 type="text" name="password" value=""></TD>
 			          </TR>
 			          <TR>
 			            <TD align=right >手机:</TD>
-			            <TD ><input name="mobile" type="text" class="" id="mobile" value="" maxlength="13"></TD>
+			            <TD ><input name="mobile" type="text" class="" id="mobile" v-model="user.phone" maxlength="13"></TD>
+			            <TD ><input name="mobile" type="text" class="" id="mobile" v-model="userInfo.userPhone" maxlength="13"></TD>
 			            <TD align=right>邮箱:</TD>
-			            <TD >7478@163.com			<!--
+			            <TD v-text="user.email">7478@163.com			<!--
+			            <TD v-model="userInfo.merchantEmail" >7478@163.com			<!--
 						<input name="email" type="text" id="email" value="7478@163.com" size=40  class="validate[required,custom[email]]">
 						-->
 						</TD>
 			          </TR>
 			          <TR>
 			            <TD align=right>真实姓名:</TD>
-			            <TD ><input name="truename" type="text" id="truename" value="仙女" size=20  class=""></TD>
+			            <TD ><input name="truename" type="text" id="truename" v-model="user.name" size=20  class=""></TD>
+			            <TD ><input name="truename" type="text" id="truename" v-model="userInfo.userRealName" size=20  class=""></TD>
 			            <TD align=right>性别:</TD>
 			            <TD >
-			              <label>
-			                <input name="sex" type="radio" id="check_0" value="男" >男</label>
-			                <label style="width: 15px;"></label>
-			              <label>
-			                <input type="radio" name="sex" value="女" id="check_1" checked>女</label>
+			             <label>
+								<input name="sex" v-model="userInfo.userSex"
+								type="radio" value="1" />男
+								</label>
+								<label style="width: 15px;"></label>
+								<label>
+               					 <input name="sex"
+								v-model="userInfo.userSex" type="radio" value="2" />女</label>
 			            </TD>
 			          </TR>
-			          <TR>
-			            <TD align=right>住址:</TD>
-			            <TD colspan="3"  class="tdd" >
-			            	<!--
-                            	作者：1017009135@qq.com
-                            	时间：2019-03-10
-                            	描述：省市区三级联动,绑定onChange事件
-                            -->
-			            	<select class="sel_f sel_f2 sel_b2" name="countryid" onChange="setarea(this.value, 'shengid')">
-								<option value="399" selected>中国</option>
-								<option value="400" >韩国</option>
-								<option value="1023" >测试地址</option>				</select>
-							<select class="sel_f sel_f2 sel_b2" name="shengid" id="shengid" onChange="setarea(this.value, 'areaid')">
-								<option value="0">省</option>
-								<option value="1" >北京市</option><option value="2" >上海市</option><option value="3" >天津市</option><option value="4" >重庆市</option><option value="5" >河北市</option><option value="6" >山西</option><option value="7" >内蒙古</option><option value="8" >辽宁</option><option value="9" >吉林</option><option value="10" >黑龙江</option><option value="11" >江苏</option><option value="12" >浙江</option><option value="13" >安徽</option><option value="14" selected>福建</option><option value="15" >江西</option><option value="16" >山东</option><option value="17" >河南</option><option value="18" >湖北</option><option value="19" >湖南</option><option value="20" >广东</option><option value="21" >广西</option><option value="22" >海南</option><option value="23" >四川</option><option value="24" >贵州</option><option value="25" >云南</option><option value="26" >西藏</option><option value="27" >陕西</option><option value="28" >甘肃</option><option value="29" >青海</option><option value="30" >宁夏</option><option value="31" >新疆</option><option value="32" >台湾</option><option value="33" >香港</option><option value="34" >澳门</option><option value="577" ></option><option value="1011" ></option><option value="1018" ></option><option value="1022" >测试地址1</option>				</select>
-						  	<select class="sel_f sel_f2 sel_b2" name="areaid" id="areaid"  >
-								<option value="0">市</option>
-			                    <option value="146" selected>福州市</option><option value="147" >厦门市</option><option value="148" >莆田市</option><option value="149" >三明市</option><option value="150" >泉州市</option><option value="151" >漳州市</option><option value="152" >南平市</option><option value="153" >龙岩市</option><option value="154" >宁德市</option>			  </select>
-							<input name="address" type="text" class="input_c inf_inc" id="address" value="sss" size="50"  />
-			            </TD>
-			          </TR>
+			         <TR>
+							<TD align=right>住址:</TD>
+							<TD colspan="3" class="tdd">
+								<select class="sel_f sel_f2 sel_b2" name="countryid" id="gj" @change="setarea()">
+								<option value="0" name="country">请选择</option>
+									<option v-for="(temp,index) in countryList" v-bind:value="temp.areaid">{{temp.name}}</option>
+									<!-- <option value="400">韩国</option>
+									<option value="1023">测试地址</option> -->
+								</select>
+								<select class="sel_f sel_f2 sel_b2" name="shengid" id="shengid" @change="setcity()">
+									<option v-for="(temp,index) in provinceList" v-bind:value="temp.areaid">{{temp.name}}省</option>
+								</select>
+								<select class="sel_f sel_f2 sel_b2" name="areaid" id="areaid">
+									<option v-for="(temp,index) in cityList"  v-bind:value="temp.areaid">{{temp.name}}市</option>
+								</select>
+								<input name="address" type="text" class="input_c inf_inc" id="address" v-model=userInfo.adDetail size="50" />
+							</TD>
+						</TR>
 			        </tbody>
       			</table>
       			<table class="table table-hover table-condensed table-bordered">
@@ -106,66 +115,67 @@
 			          </TR>
 						<TR>
 						  <TD  align=right>店铺名称:</TD>
-						  <TD >仙女聚集之地</TD>
+						  <TD v-text="user.shopName">仙女聚集之地</TD>
+						  <TD v-text="userInfo.shopName">仙女聚集之地</TD>
 						  <TD align="right">保证金:</TD>
 						<!--
                         	作者：1017009135@qq.com
                         	时间：2019-03-10
                         	描述：扣除保证金需添加单击事件 onclick="kcbzj('487')"
                         -->
-			        	<TD >0 &nbsp;<input id="kbzj" type="text" name="deposit" value="0"><a href="javascript:void(0)"  >&nbsp;扣除保证金</a></TD>
+			        	<TD v-txex="user.guaranteeMoney">0 &nbsp;<input id="kbzj" type="text" name="deposit" value="0"><a href="javascript:void(0)"  >&nbsp;扣除保证金</a></TD>
+			        	<TD > &nbsp;<input id="kbzj" type="text" name="deposit" v-model="userInfo.guaranteemoney"><a href="javascript:void(0)"  >&nbsp;扣除保证金</a></TD>
 					  </TR> 
 						<TR>
 			            <TD  align=right>服务类别:</TD>
-			            <TD colspan="3" >
-			           		 自驾游,            </TD>
+			            <TD colspan="3" v-txex=""></TD>
 			          </TR>
 			          <TR>  
 						  <TD  align=right>身份证:</TD>
-						  <TD colspan="3" >身份证：430221199907197128</TD>
+						  <TD colspan="3" >身份证：<span v-text="userInfo.identityNumber">430221199907197128</span> </TD>
 					  </TR>
 			          			<TR>
 						  <TD  align=right>证件正面:</TD>
-						  <TD ><a href="/Uploads/image/2019-02/20190227021334-53969.jpg" target="_blank"><img src="/Uploads/image/2019-02/20190227021334-53969.jpg" width="150" /></a></TD>
+						  <TD ><a href="/Uploads/image/2019-02/20190227021334-53969.jpg" target="_blank"><img :src="userInfo.identityPositiveImg" width="150" /></a></TD>
 						  <TD align="right">证件反面:</TD>
-						  <TD ><a href="/Uploads/image/2019-02/20190227021354-44078.jpg" target="_blank"><img src="/Uploads/image/2019-02/20190227021354-44078.jpg" width="150" /></a></TD>
+						  <TD ><a href="/Uploads/image/2019-02/20190227021354-44078.jpg" target="_blank"><img :src="userInfo.identityNegativeImg" width="150" /></a></TD>
 				      </TR>
 						<TR>
 						  <TD  align=right>手持证件照:</TD>
 						  <TD >
-			              <a href="/Uploads/image/2019-02/20190227021357-63378.jpg" target="_blank"><img src="/Uploads/image/2019-02/20190227021357-63378.jpg" width="150" /></a>
+			              <a href="/Uploads/image/2019-02/20190227021357-63378.jpg" target="_blank"><img :src="userInfo.identityHandImg" width="150" /></a>
 			              </TD>
 						  <TD align="right">服务语言:</TD>
-						  <TD >中文</TD>
+						  <TD v-text="userInfo.languageNameText">中文</TD>
 					  </TR>
 						<TR>
 						  <TD  align=right>擅长专业:</TD>
-						  <TD >
+						  <TD v-text="userInfo.majorNameText">
 			             		 视觉设计,              </TD>
 						  <TD align="right">所在城市:</TD>
-						  <TD >首尔特别市</TD>
+						  <TD v-text="userInfo.liveCityID">首尔特别市</TD>
 					  </TR>
 						<TR>
 						  <TD  align=right>QQ:</TD>
-						  <TD ></TD>
+						  <TD v-text="userInfo.qq"></TD>
 						  <TD align="right">微信:</TD>
-						  <TD ></TD>
+						  <TD v-text="userInfo.weChat"></TD>
 					  </TR>
 						<TR>
 						  <TD  align=right>职业:</TD>
-						  <TD ></TD>
+						  <TD v-text="userInfo.profession"></TD>
 						  <TD align="right">身高:</TD>
-						  <TD >CM</TD>
+						  <TD v-text="userInfo.height">CM</TD>
 					  </TR>
 						<TR>
 						  <TD  align=right>星座:</TD>
-						  <TD >白羊座</TD>
+						  <TD v-text="userInfo.constellation">白羊座</TD>
 						  <TD align="right">年龄:</TD>
-						  <TD >0</TD>
+						  <TD v-text="userInfo.age">0</TD>
 					  </TR>
 						<TR>
 						  <TD  align=right>自我介绍:</TD>
-						  <TD colspan="3" >scsd</TD>
+						  <TD colspan="3" v-text="userInfo.selfIntroduction">scsd</TD>
 					  </TR>
 			
 			          <TR>
@@ -173,22 +183,23 @@
 			            <!--<td ><INPUT  type="radio" name="SHOP_FREE_STATUS" class="input-heigt" value="1"  >是-->
 			            <!--&nbsp;&nbsp;&nbsp;<INPUT type="radio" name="SHOP_FREE_STATUS" class="input-heigt" value="0" checked >否-->
 			            <!--</td>-->
-			            <td >否            </td>
+			            <td v-if="userInfo.experienceStatus==0">开启    </td>
+			             <td v-if="userInfo.experienceStatus==1">关闭    </td>
 			            <td align="right" noWrap>店铺免费体验月数：</td>
 			            <td >
 			              <select id="free_time"  type="text" name="free_time" class="input-heigt">
-			                <option value="1"> 1</option>
-			                <option value="2"> 2</option>
-			                <option value="3"> 3</option>
-			                <option value="4"> 4</option>
-			                <option value="5"> 5</option>
-			                <option value="6"> 6</option>
-			                <option value="7"> 7</option>
-			                <option value="8"> 8</option>
-			                <option value="9"> 9</option>
-			                <option value="10"> 10</option>
-			                <option value="11"> 11</option>
-			                <option value="12"> 12</option>
+			                <option value="1" v-model="userInfo.experience"> 1</option>
+			                <option value="2" v-model="userInfo.experience"> 2</option>
+			                <option value="3" v-model="userInfo.experience"> 3</option>
+			                <option value="4" v-model="userInfo.experience"> 4</option>
+			                <option value="5" v-model="userInfo.experience"> 5</option>
+			                <option value="6" v-model="userInfo.experience"> 6</option>
+			                <option value="7" v-model="userInfo.experience"> 7</option>
+			                <option value="8" v-model="userInfo.experience"> 8</option>
+			                <option value="9" v-model="userInfo.experience"> 9</option>
+			                <option value="10" v-model="userInfo.experience"> 10</option>
+			                <option value="11" v-model="userInfo.experience"> 11</option>
+			                <option value="12" v-model="userInfo.experience"> 12</option>
 			              </select>
 			            </td>
 			          </tr>
@@ -202,11 +213,11 @@
                             	描述：v-if 对店铺状态做判断
                             -->
 			              <label>
-			                <input name="shopstatus" type="radio" value="1" >开启</label>
+			                <input name="shopstatus" type="radio" value="1" v-model="userInfo.businessState" >营业</label>
 			              <label>
-			                <input type="radio" name="shopstatus" value="2"  checked>暂停</label>
+			                <input type="radio" name="shopstatus" value="2"  v-model="userInfo.businessState">暂停</label>
 			              <label>
-			                <input type="radio" name="shopstatus" value="0"  >关闭</label>
+			                <input type="radio" name="shopstatus" value="3"  v-model="userInfo.businessState" >关闭</label>
 			            </TD>
 			          </TR>
 			          <TR style="display:;">
@@ -216,18 +227,18 @@
 			            <TD> </TD>
 			          </TR>
 			
-			          <TR style="display:;">
+			          <TR style="display:;" v-if="userInfo.businessState==2">
 			            <TD  align=right>店铺暂停理由:</TD>
 			            <TD colspan="3" align="left">
-			              <textarea rows="2"  name="pausereason"  cols="100%" style="text-align: left;padding-left:5px;">
+			              <textarea rows="2"  name="pausereason"  cols="100%" style="text-align: left;padding-left:5px;" v-model="userInfo.reason">
 			                              </textarea>
 			            </TD>
 			          </TR>
 			
-			          <TR style="display:;">
-			            <TD  align=right>店铺光闭理由:</TD>
+			          <TR style="display:;" v-if="userInfo.businessState==3">
+			            <TD  align=right>店铺关闭理由:</TD>
 			            <TD colspan="3" align="left">
-			              <textarea  rows="2" name="stopreason" cols="100%" style="text-align: left;padding-left:5px;">
+			              <textarea  rows="2" name="stopreason" cols="100%" style="text-align: left;padding-left:5px;" v-model="userInfo.reason">
 			                             </textarea>
 			            </TD>
 			          </TR>
@@ -238,39 +249,39 @@
 			        <TBODY>
 						<TR>
 			            <TD width="18%" align=right > 注册时间:</TD>
-			            <TD  width="32%">
+			            <TD  width="32%" v-text="userInfo.userRegistrationTime">
 			            2019-02-22 09:35            </TD>
 			            <TD  width="18%" align="right">注册 IP:</TD>
-			            <TD  width="32%" >43.250.200.28</TD>
+			            <TD  width="32%" v-text="userInfo.registerIP">43.250.200.28</TD>
 			          </TR>
 			          <TR>
 			            <TD  align=right>最后登录时间:</TD>
-			            <TD >
+			            <TD v-text="userInfo.recentEntry">
 			              2019-03-04 13:37            </TD>
 			            <TD align="right">最后登录IP:</TD>
-			            <TD >220.202.152.8</TD>
+			            <TD v-text="userInfo.lastEntry">220.202.152.8</TD>
 			          </TR>
 			          <TR>
 					  <TR style="display:;">
 						  <TD  align=right>资料审核:</TD>
 						  <TD >
 			              <label>
-			                <input name="zt" type="radio" id="check_0" value="1" checked>已通过审核</label>
+			                <input name="zt" type="radio" id="check"  v-model="userInfo.auditStatus" value="1">已通过审核</label>
 			              <label>
-			                <input type="radio" name="zt" value="0" id="check_1" >未通过审核</label></TD>
+			                <input type="radio" name="zt"  id="check" v-model="userInfo.auditStatus" value="2">未通过审核</label></TD>
 			            <TD  align=right>邮箱验证:</TD>
 			            <TD >
 			              <label>
-			                <input name="check" type="radio" id="check_0" value="1" checked>已通过验证</label>
+			                <input name="check" type="radio" id="checkEma" v-model="userInfo.mailboxVerification" value="true">已通过验证</label>
 			              <label>
-			                <input type="radio" name="check" value="0" id="check_1" >未通过验证</label>
+			                <input type="radio" name="check" id="checkEma" v-model="userInfo.mailboxVerification" value="false">未通过验证</label>
 			            </TD>
 					  </TR>
 						<tr>
-			            <TD><input type="hidden" name="userid" value="490"></TD>
+			            <TD><input type="hidden" name="userid" v-model="userInfo.userID"></TD>
 			            <td colspan="1"></td>
 			            <TD colspan="1" style="text-align: right;">
-			            	<button type="button"  class="btn btn-success">保存</button>
+			            	<button type="button"  class="btn btn-success" @click="updateUserInfo($event)" >保存</button>
 			            </TD>
 			            <TD colspan="1" >
 			            	<button type="button"  class="btn btn-default" onClick="history.go(-1)">返回</button>
@@ -284,4 +295,127 @@
 	<script src="../../js/jquery-1.12.4.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	var listVm = new Vue({
+		el: "#listVm",
+		data: {
+			//会员信息
+			user: {},
+		},
+
+		//方法
+		methods: {
+			goToPage: function() {
+				var userid=window.sessionStorage.getItem("userid");
+				$.getJSON("/sj/jdc/"+userid, function(pageData) {
+					listVm.user = pageData;
+					console.log(pageData)
+				}); 
+			}
+		},
+
+		//组件创建
+		created: function() {
+			this.goToPage();
+			
+			//加载金币数和积分
+		}
+	});
+		var userID=window.sessionStorage.getItem("userID");
+		var userVm=new Vue({
+			el: "#shopVm",
+			data: {
+				//会员信息
+				userInfo:{
+					country:"",
+					provincialID:"",
+					countyID:""
+				},
+				countryList:[],
+				provinceList:[],
+				cityList:[]
+			},//组件创建
+			created: function() {
+				var userID=window.sessionStorage.getItem("userID");
+				if(userID){
+					$.ajax("/c/cmmember/loadShopVo",{
+						type:"get",
+						dataType:"json",
+						contentType:"application/json",
+						data:{
+							"userID":userID,
+						},
+						success:function(json){
+							userVm.userInfo=json;
+							console.log(userVm.userInfo);
+						}
+					})
+				}
+				$.ajax("/c/cmmember/queryArea",{
+					type:"get",
+					dataType:"json",
+					contentType:"application/json",
+					data:{
+						"id":0,
+					},
+					success:function(json){
+						userVm.countryList=json;
+						console.log("国家："+userVm.countryList);
+					}
+				})
+			},
+			methods:{
+				updateUserInfo:function(e){
+					this.userInfo.country=$("[name=country]").val();
+					this.userInfo.provincialID=$("[name=shengid]").val();
+					this.userInfo.countyID=$("[name=areaid]").val();
+					var _userInfo=this.userInfo;
+					console.log("1:"+JSON.stringify(_userInfo))
+					$.ajax("/c/cmmember/updateShopVip",{
+						type:"put",
+						dataType:"json",
+						contentType:"application/json",
+						data:JSON.stringify(_userInfo),
+						success:function(json){
+							if(json.code==200){
+								alert("编辑成功！");
+								location.href="shopperManagement.html";
+							}else{
+							}
+						}
+					});
+				}, 
+				setarea:function(){
+					var id=$("#gj").val();
+					$.ajax("/c/cmmember/queryArea",{
+						type:"get",
+						dataType:"json",
+						contentType:"application/json",
+						data:{
+							"id":id,
+						},
+						success:function(json){
+							userVm.provinceList=json;
+							console.log("省："+userVm.provinceList);
+						}
+					})
+				},
+				setcity:function(){
+					var id=$("#shengid").val();
+					$.ajax("/c/cmmember/queryArea",{
+						type:"get",
+						dataType:"json",
+						contentType:"application/json",
+						data:{
+							"id":id,
+						},
+						success:function(json){
+							userVm.cityList=json;
+							console.log("市："+userVm.cityList);
+						}
+					})
+				}
+			}
+		})
+	</script>
 </html>

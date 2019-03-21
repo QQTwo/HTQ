@@ -18,7 +18,14 @@ public class UserVo {
 	private String contactMailbox;
 	private String merchantEmail;
 	private int businessState;
+	private int documenttype;
 	
+	public int getDocumenttype() {
+		return documenttype;
+	}
+	public void setDocumenttype(int documenttype) {
+		this.documenttype = documenttype;
+	}
 	public int getBusinessState() {
 		return businessState;
 	}

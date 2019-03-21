@@ -74,7 +74,8 @@ public class MerchantAction {
 	
 	@PostMapping("addzjyjd")
 	public String  addzjyjd(HttpSession session,Model model,int stid,String name,int sex,int height,String constellation,int age,String visatype,int documentType,String certificates,String experience,boolean vehicle,boolean guideCard,String inKorea,String phone,String email,String country,String provincialID,String cityID,String detailed,MultipartFile schoolReport) {
-				Integer userID=((User)session.getAttribute("USER")).getUserid();
+		
+		Integer userID=((User)session.getAttribute("USER")).getUserid();
 		
 				Appraisalapply app=new Appraisalapply();
 				try {

@@ -101,19 +101,19 @@ public interface IUserDao {
 	 * @param groupID
 	 * @return
 	 */
-	public int updateZnxNews(@Param("groupID")String groupID);
+	public int updateZnxNews(@Param("theSender")String theSender,@Param("addressee")String addressee);
 	/**
 	 * 删除站内信
 	 * @param newsID
 	 * @return
 	 */
-	public int deleteZnxNews(@Param("groupID")String groupID);
+	public int deleteZnxNews(@Param("theSender")String theSender,@Param("addressee")String addressee);
 	/**
 	 * 查询站内信详情
 	 * @param groupID
 	 * @return
 	 */
-	public List<NewsVo> queryZnxXq(@Param("groupID")String groupID);
+	public List<NewsVo> queryZnxXq(@Param("groupID")String groupID,@Param("thesender")Integer thesender,@Param("addressee")Integer addressee);
 	/**
 	 * 新增站内信
 	 * @param news
@@ -164,6 +164,21 @@ public interface IUserDao {
 	    * @param @param userID
 	    * @param @return    参数
 	    * @return int  返回类型
+	    * @throws
+	 */
+	public int updateUserSign(@Param("userid")Integer userID,@Param("signNum")Integer signNum);
+	
+	//查询未读信息（全部为0 系统1 站内信2）
+	public int selectNoReader(@Param("newstype") Integer newstype,@Param("userid")Integer userid);
+	/**
+	 * 
+	    * @Title: updateUserSign
+	    * @Description: 修改签到状态
+	    * @param @param userID
+	    * @param @param signNum
+	    * @param @param signType
+	    * @param @return    参数
+	    * @return int    返回类型
 	    * @throws
 	 */
 	int updateUserSign(@Param("userid")Integer userID,@Param("signNum")Integer signNum,@Param("signType")Integer signType);

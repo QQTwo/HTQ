@@ -19,8 +19,8 @@
 		</style>
 	</head>
 	<body>
-		<div class="">
-			<div class="col-lg-12 col-xs-12 back" style="background-color: #f2f2f2;">
+		<div class="" id="baoDetail">
+			<div class="col-lg-12 col-xs-12 back" style="background-color: #f2f2f2;width:1250px;">
 			  <p style="font-weight: bold;padding-top: 10px;">提现申请</p>
 			</div>
 			<div class="col-xs-12" style="margin-bottom: 5px;"></div>
@@ -29,34 +29,57 @@
 					<TBODY>
 			          <TR>
 			            <TD width="89" align=right noWrap><strong>会员:</strong></TD>
-			            <TD width="300" >魅力。解释一切♀</TD>
+			            <TD width="300" v-text="deObj.userName" >魅力。解释一切♀</TD>
 			            <TD align=right>&nbsp;</TD>
-			            <TD >&nbsp;</TD>
+			            <TD >&nbsp;<input type="hidden" v-model="deObj.userID" name="userID"></TD>
 			          </TR>
 					  	<TR>
 			            <TD align=right noWrap>申请日期：</TD>
-			            <TD >2019-03-09 11:23:52</TD>
+			            <TD v-text="deObj.submitTime">2019-03-09 11:23:52</TD>
 			            <TD align=right>保证金：</TD>
-			            <TD >500.00元</TD>
+			            <TD><span v-text="deObj.goldCoin">500.00</span>元</TD>
 			          </TR>
 			          <TR>
 			            <TD align=right>店铺名称：</TD>
-			            <TD >店铺</TD>
-			            <TD align=right>状态：</TD>
+			            <TD colspan="3" v-text="deObj.shopName">店铺</TD>
+			            <!-- <TD align=right>状态：</TD>
 			            <TD>
-						交易成功   </TD>
+						交易成功   </TD> -->
 			          </TR>
-			            
+			             <TR>
+		            <TD align=right>状态：</TD>
+		            <!--
+                    	作者：1017009135@qq.com
+                    	时间：2019-03-10
+                    	描述：当状态为交易完成时，直接显示状态，也就没有下面的“设置状态”按钮
+                    -->
+		             <TD colspan="3" align="left">
+			            <span v-if="deObj.auditStatus==1" style="padding-left:10px">
+				            
+				            <input type="radio" name="auditStatus" id="chck2" v-model="deObj.auditStatus" value="2">交易成功
+				            <label style="width:10px"></label>
+				            <input type="radio" name="auditStatus" id="chck3" v-model="deObj.auditStatus" value="3">交易失败
+			            </span>
+			            <span v-if="deObj.auditStatus==2">
+			            	交易成功
+			            	<input type="hidden" name="auditStatus" v-model="deObj.auditStatus" value="2">
+			            </span>
+			            <span v-if="deObj.auditStatus==3">
+			            	交易失败
+			            	<input type="hidden" name="auditStatus" v-model="deObj.auditStatus" value="3">
+			            </span>
+		             </TD>
+		          </TR>
 			          <TR>
 			            <TD align=right>备注：</TD>
-			            <TD colspan="3"><textarea name="remarks"  rows='3' cols='160' placeholder="请填入拒绝原因"></textarea></TD>
+			            <TD colspan="3"><textarea name="remarks"  rows='3' cols='160' placeholder="请填入拒绝原因" v-model="deObj.reviewNotes"></textarea></TD>
 			          </TR>
 			          <TR>
 			           <TD><input type="hidden" name="userid" value="490"></TD>
 			            <td colspan="1"></td>
 			            <TD colspan="1" style="text-align: right;">
 			            	<!--如果状态为申请成功，则不需要显示提交按钮-->
-			            	<button type="button"  class="btn btn-success" style="display: none;">提交</button>
+			            	<button type="button"  class="btn btn-success" @click="updateInfo()">设置状态</button>
 			            </TD>
 			            <TD colspan="1" >
 			            	<button type="button"  class="btn btn-default" onClick="history.go(-1)">返回</button>
@@ -70,4 +93,64 @@
 	<script src="../../js/jquery-1.12.4.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/vue.js"></script>
+	<script type="text/javascript">
+	var userID=window.sessionStorage.getItem("userID");
+	var submitTime=window.sessionStorage.getItem("submitTime");
+	var bID=window.sessionStorage.getItem("bID");
+	var vmCnt = new Vue({
+		el: "#baoDetail",
+		data: {
+			deObj:{
+				
+			}
+			
+			
+		},
+
+		//方法
+		methods: {
+			updateInfo:function(e){
+				this.deObj.submitTime=submitTime;
+				var _deObj=this.deObj;
+				$.ajax("/c/cmmember/updateBaozhengjin",{
+					type:"put",
+					dataType:"json",
+					contentType:"application/json",
+					data:JSON.stringify(_deObj),
+					success:function(json){
+						if(json.code==200){
+							alert("审核成功！");
+							location.href="baozhengjinManagement.html";
+						}else{
+							
+						}
+					}
+				});
+			}
+		},
+	
+		created: function() {
+			var userID=window.sessionStorage.getItem("userID");
+			var submitTime=window.sessionStorage.getItem("submitTime");
+			var bID=window.sessionStorage.getItem("bID");
+			
+			$.ajax({
+				url : "/c/cmmember/loadbaozhengjin",
+				type : "get",
+				data:{
+					"userID":userID,
+					"Time":submitTime,
+					"bID":bID
+					},
+				dataType : "json",
+				success : function(obj){
+					vmCnt.deObj = obj;
+					console.log(vmCnt.deObj);
+				}
+			});
+		
+	} 
+
+});
+	</script>
 </html>

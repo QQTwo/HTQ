@@ -1,0 +1,109 @@
+package com.accp.vo.cm;
+
+import java.util.Date;
+
+public class PutVo {
+	 private Integer pfid;
+
+	    private Integer userid;
+
+	    private Integer bankid;
+
+	    private String bankaccount;
+
+	    private String openbankname;
+
+	    private Date submittime;
+
+	    private Date audittime;
+
+	    private Float money;
+
+	    private Integer auditstatus;
+	    
+	    private String username;
+
+		public PutVo() {
+			super();
+		}
+
+		public Integer getPfid() {
+			return pfid;
+		}
+
+		public void setPfid(Integer pfid) {
+			this.pfid = pfid;
+		}
+
+		public Integer getUserid() {
+			return userid;
+		}
+
+		public void setUserid(Integer userid) {
+			this.userid = userid;
+		}
+
+		public Integer getBankid() {
+			return bankid;
+		}
+
+		public void setBankid(Integer bankid) {
+			this.bankid = bankid;
+		}
+
+		public String getBankaccount() {
+			return bankaccount;
+		}
+
+		public void setBankaccount(String bankaccount) {
+			this.bankaccount = bankaccount;
+		}
+
+		public String getOpenbankname() {
+			return openbankname;
+		}
+
+		public void setOpenbankname(String openbankname) {
+			this.openbankname = openbankname;
+		}
+
+		public Date getSubmittime() {
+			return submittime;
+		}
+
+		public void setSubmittime(Date submittime) {
+			this.submittime = submittime;
+		}
+
+		public Date getAudittime() {
+			return audittime;
+		}
+
+		public void setAudittime(Date audittime) {
+			this.audittime = audittime;
+		}
+
+		public Float getMoney() {
+			return money;
+		}
+
+		public void setMoney(Float money) {
+			this.money = money;
+		}
+
+		public Integer getAuditstatus() {
+			return auditstatus;
+		}
+
+		public void setAuditstatus(Integer auditstatus) {
+			this.auditstatus = auditstatus;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+}

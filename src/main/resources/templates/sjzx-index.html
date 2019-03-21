@@ -269,7 +269,11 @@
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript" src="/Public/js/common.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
 <script type="text/javascript">
+var userid=[[${session.USER.userid}]];
+
+initWebSocket(-1,userid);	
 	var merchantlevel=[[${user.merchantlevel}]];
 	$(".star_pl_sp").css("width",merchantlevel/5*100);
 	$.each($("[name=stid]"),function(i,obj){

@@ -49,7 +49,7 @@
 				</style>
 				<li id="li2"><a href="">个人中心</a><span class="my_nav_i"></span></li>
 				<li id="li3"><a href="">账户设置</a><span class="my_nav_i"></span></li>
-				<li id="li4"><a href="">消息</a><span class="my_nav_i"></span></li>
+				<li id="li4"><a href="">消息<span class="msg_num">5</span></a><span class="my_nav_i"></span></li>
 
 			</ul>
 		</div>
@@ -238,4 +238,10 @@
 <script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
+<script type="text/javascript">
+var userid=[[${session.USER.userid}]];
+
+initWebSocket(-1,userid);	
+</script>
 </html>

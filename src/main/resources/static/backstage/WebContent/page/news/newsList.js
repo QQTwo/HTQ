@@ -173,7 +173,7 @@ layui.config({
 			    		dataHtml += '<td style="color:#f00">'+"未通过"+'</td>';	
 			    	}
 			    	dataHtml += '<td>'
-					+  '<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>修 改</a>'
+					+  '<a class="layui-btn layui-btn-mini news_edit" href="bkgl_updata.html"><i class="iconfont icon-edit"></i>修 改</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
@@ -183,19 +183,6 @@ layui.config({
 		    return dataHtml;
 		
 
-		//分页
-		/*var nums = 13; //每页出现的数据量
-		if(that){
-			newsData = that;
-		}
-		laypage({
-			cont : "page",
-			pages : Math.ceil(newsData.length/nums),
-			jump : function(obj){
-				$(".news_content").html(renderDate(newsData,obj.curr));
-				$('.news_list thead input[type="checkbox"]').prop("checked",false);
-		    	form.render();
-			}
-		})*/
+		
 	}
 })

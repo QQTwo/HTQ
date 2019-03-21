@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>积分</title>
+<meta name="description" content="这是一个 index 页面">
+<meta name="keywords" content="index">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="icon" type="image/png" href="/assets/i/favicon.png">
+<link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<script src="http://cdn.bootcss.com/echarts/3.3.2/echarts.min.js"></script>
+<link rel="stylesheet" href="/assets/css/amazeui_min.css" />
+<link rel="stylesheet" href="/assets/css/amazeui_datatables_min.css" />
+<link rel="stylesheet" href="/assets/css/app.css" />
+<script src="/assets/js/jquery-2.1.4.js"></script>
+<script>
+	//全选
+	var isCheckAll = false;
+	function swapCheck() {
+		if (isCheckAll) {
+			$("input[type='checkbox']").each(function() {
+				this.checked = false;
+			});
+			isCheckAll = false;
+		} else {
+			$("input[type='checkbox']").each(function() {
+				this.checked = true;
+			});
+			isCheckAll = true;
+		}
+	}
+</script>
+<style type="text/css">
+th, td {
+	text-align: center;
+}
+</style>
+</head>
+
+<body data-type="index">
+	<script src="/assets/js/theme.js"></script>
+
+	<div class="am-g tpl-g">
+
+		<!-- 内容区域 -->
+		<div class="tpl-wrapper" id="findRecordVo">
+			<div class="row-content am-cf">
+				<div class="row">
+				
+					<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+					
+						<div class="widget am-cf">
+							<div class="widget-head am-cf">
+								<div class="widget-title  am-cf" th:if="${Recordid==1}">金币记录</div>
+								<div class="widget-title  am-cf" th:if="${Recordid==2}">积分记录</div>
+								<div class="widget-title  am-cf" th:if="${Recordid==3}">提现记录</div>
+								<div class="widget-title  am-cf" th:if="${Recordid==4}">保证金记录</div>
+							</div>
+							<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+									<div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+										<input type="text" class="am-form-field" placeholder="用户昵称" name="name">
+										<span class="am-input-group-btn">
+											<button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+												type="button" @click="goToPage(1)"></button>
+										</span>
+									</div>
+								</div>
+							<div class="widget-body  am-fr">
+
+								<div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+									<div class="am-form-group">
+										<div class="am-btn-toolbar"></div>
+									</div>
+								</div>
+
+								<div class="am-u-sm-12">
+									<table width="100%"
+										class="am-table am-table-compact am-table-striped tpl-table-black "
+										id="example-r">
+										<thead>
+											<tr>
+												<th>序号</th>
+												<th>用户</th>
+												<th th:if="${Recordid==4}">商家</th>
+												<th>类型</th>
+												<th>获取方式</th>
+												<th>消费</th>
+												<th>获得</th>
+												<th>状态</th>
+												<th>备注</th>
+												<th th:if="${Recordid==1}">消费时间</th>
+												<th th:if="${Recordid==2}">记录时间</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(temp,index) in integralRecord.list">
+												<td v-text="index+1">老黑</td>
+												<td v-text="temp.username">周工作汇报</td>
+												<td th:if="${Recordid==4}" v-text="temp.shopname">周工作汇报</td>
+												<td th:if="${Recordid==1}">金币</td>
+												<td th:if="${Recordid==4}">金币</td>
+												<td th:if="${Recordid==3}">金币</td>
+												<td th:if="${Recordid==3}">提现</td>
+												<td th:if="${Recordid==2}">积分</td>
+												<span th:if="${Recordid==4}">
+													<td v-if="temp.bondtype==1">充值</td>
+													<td v-if="temp.bondtype==2">线下</td>
+												</span>
+												<td th:if="${Recordid==2}"><!-- 明天签到赠送 -->充值</td>
+												<span th:if="${Recordid==1}">
+													<td v-if="temp.acquisitionmode==1">预定服务</td>
+													<td v-if="temp.acquisitionmode==2">服务收益</td>
+													<td v-if="temp.acquisitionmode==3">取消物流订单</td>
+													<td v-if="temp.acquisitionmode==4">其他</td>
+													<td v-if="temp.acquisitionmode==5">充值</td>
+													<td v-if="temp.acquisitionmode==6">线下充值</td>
+													<td v-if="temp.acquisitionmode==7">退款</td>
+													<td v-if="temp.acquisitionmode==8">提现</td>
+												</span>
+												<td th:if="${Recordid==4}"><span class="mo1" v-if="temp.goldcoin>0" v-text="temp.goldcoin"></span>
+												<span class="mo1" v-if="temp.recordinandout<0">-</span></td>
+												<td th:if="${Recordid==4}"><span class="mo1" v-if="temp.goldcoin<0" v-text="temp.goldcoin"></span>
+												<span class="mo1" v-if="temp.goldcoin>0">-</span></td>
+												<td th:if="${Recordid==1}"><span class="mo1" v-if="temp.recordinandout>0" v-text="temp.recordinandout"></span>
+												<span class="mo1" v-if="temp.recordinandout<0">-</span></td>
+												<td th:if="${Recordid==1}"><span class="mo1" v-if="temp.recordinandout<0" v-text="temp.recordinandout"></span>
+												<span class="mo1" v-if="temp.recordinandout>0">-</span></td>
+												<td th:if="${Recordid==2}"><span class="mo1" v-if="temp.recordinandout>0" v-text="temp.recordinandout"></span>
+												<span class="mo1" v-if="temp.recordinandout<0">-</span></td>
+												<td th:if="${Recordid==2}"><span class="mo1" v-if="temp.recordinandout<0" v-text="temp.recordinandout"></span>
+												<span class="mo1" v-if="temp.recordinandout>0">-</span></td>
+												<td th:if="${Recordid==3}"><span class="mo1" v-if="temp.money>0" v-text="temp.money"></span>
+												<span class="mo1" v-if="temp.money<0">-</span></td>
+												<td th:if="${Recordid==3}"><span class="mo1" v-if="temp.money<0" v-text="temp.money"></span>
+												<span class="mo1" v-if="temp.money>0">-</span></td>
+												<td v-if="temp.auditstatus==1">待审核</td>
+												<td v-if="temp.auditstatus==2">审核成功</td>
+												<td v-if="temp.auditstatus==3">未通过</td>
+												<td th:if="${Recordid==1}" v-text="temp.recorddescribe">周工作汇报</td>
+												<td th:if="${Recordid==2}" v-text="temp.irdescribe">周工作汇报</td>
+												<td th:if="${Recordid==1}" v-text="temp.recorddate">周工作汇报</td>
+												<td th:if="${Recordid==2}" v-text="temp.irdate">周工作汇报</td>
+												<td th:if="${Recordid==4}" v-text="temp.submittime">周工作汇报</td>
+												<td th:if="${Recordid==3}" v-text="temp.submittime">周工作汇报</td>
+											<tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="am-fr">
+									<ul class="am-pagination tpl-pagination">
+										<li v-for="n in integralRecord.lastPage">
+										 	<a class="s" @click="pnum($event)">{{ n }}</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/assets/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/assets/js/vue.js"></script>
+<script type="text/javascript">
+findRecordVo = new Vue({
+		el : "#findRecordVo",
+		data : {
+			integralRecord : {}
+		},
+		methods : {
+			goToPage : function(pageNum) {
+				var name1=$("[name=name]").val();
+				if(name1==""){
+					name1="1";
+				}
+				$.getJSON("/sj/findRecordVo/"+pageNum+"/10/[[${Recordid}]]/"+name1, function(data) {
+					findRecordVo.integralRecord = data;
+				});
+			},pnum:function(e){
+				findRecordVo.goToPage(e.target.innerHTML);
+			}
+		},
+		created : function() {
+			this.goToPage(1);
+		}
+	});
+	
+/* $("[name=delete1]").click(function(){
+	var array=[];
+	if(confirm("是否删除")==false){
+		return;
+	}
+	$("[name=xx]").each(function() {
+		if(this.checked){ 
+			var serviceAppraiseID=$(this).parents("tr").find("td:eq(0)").html();
+			array.push(serviceAppraiseID);
+		 }
+	})
+	$.ajax({
+		type:"delete",
+		url:"/c/yq/deleteFeedback/"+array,
+		dataType:"json",
+		success:function(json){
+			alert("成功")
+			location.href="/c/yq/Feedback";
+		}
+	});
+}) */
+/* $("[name=da]").click(function(){
+	if ($(this)[0].checked==false) {
+		$("[name=xx]").each(function() {
+			this.checked = false;
+		});
+	} else {
+		$("[name=xx]").each(function() {
+			this.checked = true;
+		});
+	}
+}) */
+</script>
+</html>

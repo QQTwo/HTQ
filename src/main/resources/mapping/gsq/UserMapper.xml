@@ -160,7 +160,7 @@
 	</select>
 	<update id="updateXtNews">
 		UPDATE `news`
-		SET `readState` =TRUE
+		SET `readState` =1
 		WHERE
 		`newsID`=#{newsID}
 	</update>
@@ -197,24 +197,25 @@
 	</select>
 	<update id="updateZnxNews">
 		UPDATE `news`
-		SET `readState` =TRUE
+		SET `readState` =1
 		WHERE
-		`messageGroup`=#{groupID}
+		thesender=#{addressee} and addressee=#{theSender}
 	</update>
 	<delete id="deleteZnxNews">
 		DELETE FROM `news`
-		WHERE `messageGroup`=#{groupID}
+		WHERE thesender=#{addressee} and addressee=#{theSender}
 	</delete>
 	<select id="queryZnxXq" resultMap="queryNews">
 		SELECT * FROM `news`
 		WHERE
 		`messageGroup` =#{groupID}
+		
 		ORDER BY `sendingTime`
 	</select>
 	<insert id="saveZnx">
 		INSERT INTO
-		`news`(`theSender`,`addRessee`,`content`,`newsType`,`messageGroup`)
-		VALUE(#{news.thesender},#{news.addressee},#{news.content},#{news.newstype},#{news.messagegroup})
+		`news`(`theSender`,`addRessee`,`content`,readState,`newsType`,`messageGroup`)
+		VALUE(#{news.thesender},#{news.addressee},#{news.content},0,#{news.newstype},#{news.messagegroup})
 	</insert>
 	<select id="queryAllNews" resultType="com.accp.pojo.News">
 		SELECT * FROM `news`
@@ -255,13 +256,24 @@
 		  `user` 
 		SET
 		  `userIntegral` = `userIntegral`+#{signNum},
+		  `signType` = 1
+		WHERE `userID` = #{userid} ;
+	</update>
+	<!-- 第二开发 webSocket 查询未读信息（全部为0 系统1 站内信2） -->
+	<select id="selectNoReader" resultType="Integer">
+			
+		SELECT count(*) FROM news WHERE readState=0 
+		<if test="newstype!=-1">
+		   AND  newsType=#{newstype}
+		</if>
+		and `addRessee`=#{userid}
 		  `signType` = #{signType}
 		<where>
 			<if test="userid != 0">
 				AND `userID` = #{userid} ;
 			</if>
 		</where>
-	</update>
+		</select>
 	<!-- 第二开发追加：记录用户习惯 -->
 	<insert id="saveUserHabit" >
 		INSERT INTO `userhabit` (

@@ -17,7 +17,12 @@ import com.accp.vo.cm.IntegralVo;
 import com.accp.vo.cm.PutforwardrecordVo;
 import com.accp.vo.cm.RecordVo;
 import com.accp.vo.cm.ServiceCollectVo;
+import com.accp.vo.cm.ShopRecomment;
+import com.accp.vo.cm.UserVo;
 import com.accp.vo.cm.VipVo;
+import com.accp.pojo.Services;
+import com.accp.pojo.User;
+import com.accp.vo.cm.BaoZhengjinVo;
 import com.accp.vo.cm.ForwardVo;
 
 /**
@@ -54,4 +59,24 @@ public interface IUserDaoCm {
 	public List<IntegralVo> queryIntegral(@Param("userName") String userName);
 	//充值记录
 	public List<RecordVo> queryRecharge(@Param("userName") String userName,@Param("acquisitionMode") Integer acquisitionMode,@Param("auditStatus") Integer auditStatus);
+	//商家推荐
+	public List<ShopRecomment> shopRecomment(@Param("userName") String userName,@Param("merchantType") Integer merchantType,@Param("shopName") String shopName,@Param("recommendbool") Integer recommendbool);
+	//修改商家推荐
+	public ShopRecomment loadshopRe(@Param("serviceID") Integer serviceID);
+	public void updateRecomment(@Param("services")Services services);
+	//保证金
+	public List<BaoZhengjinVo> baozhengjinList(@Param("userName") String userName,@Param("auditStatus") Integer auditStatus);
+	//保证金审核
+	public BaoZhengjinVo loadbaozhengjin(@Param("userID")int userID,@Param("Time")String Time,@Param("bID") Integer bID);
+	public void updateBaozhengjin(@Param("vo") BaoZhengjinVo vo);
+	//商家管理
+	public List<UserVo> queryShop(@Param("userName")String userName,@Param("shopName")String shopName,@Param("merchantType")String merchantType);
+	//统计商家管理金币数和积分数
+	public float summShopmoney(@Param("userName")String userName,@Param("shopName")String shopName,@Param("merchantType")String merchantType);
+	public float sumShopjifen(@Param("userName")String userName,@Param("shopName")String shopName,@Param("merchantType")String merchantType);
+
+	//加载商家管理对象
+	public UserVo loadShopVo(@Param("userID")Integer userID);
+	//商家管理审核
+	public void updateShopVip(@Param("u") User u);
 }

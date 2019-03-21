@@ -3,769 +3,176 @@ package com.accp.vo.xzc;
 import java.util.Date;
 
 public class postglVo {
-	private Integer postid;
-	private Integer fmid;
-	private String fmname;
-	private String title;
-	private Date releasetime;
-	private String adminopinion;
-	private Integer recommend;
-	private String content;
-	private Integer operatingState;
-private Integer userid;
-	
-	private String userimgpath;
+	 private Integer fmid;
 
-	private String username;
+	    private Integer pid;
 
-	private String userrealname;
+	    private Integer sort;
 
-	private Integer usersex;
+	    private String fmname;
 
-	private String userphone;
+	    private int auditstatus;
 
-	private String contactmailbox;
+	    private int giftintegral;
 
-	private Float usermoney;
+	    private Integer adminid;
 
-	private Integer userintegral;
+	    private Integer servicecopies;
 
-	private Integer country;
+	    private Integer admintype;
 
-	private Integer provincialid;
+	    private String name;
 
-	private Integer cityid;
+	    private String password;
 
-	private Integer countyid;
+	    private Date creationtime;
 
-	private String addetail;
+	    private Integer roleid;
 
-	private Integer merchanttype;
+	    private String creationip;
 
-	private Date merchantregistrationtime;
+	    private Integer founder;
 
-	private Integer firstserviceid;
+	    private Date recententry;
 
-	private Integer secondserviceid;
+	    private String ip;
 
-	private Float firstservicemoney;
+		public Integer getFmid() {
+			return fmid;
+		}
 
-	private Float secondservicemoney;
+		public void setFmid(Integer fmid) {
+			this.fmid = fmid;
+		}
 
-	private String hospitalname;
+		public Integer getPid() {
+			return pid;
+		}
 
-	private String shopname;
+		public void setPid(Integer pid) {
+			this.pid = pid;
+		}
 
-	private String signature;
+		public Integer getSort() {
+			return sort;
+		}
 
-	private Integer guaranteemoney;
-	
-	private Integer giftIntegral;
+		public void setSort(Integer sort) {
+			this.sort = sort;
+		}
 
-	private String shopimg;
+		public String getFmname() {
+			return fmname;
+		}
 
-	private Integer identitytype;
+		public void setFmname(String fmname) {
+			this.fmname = fmname;
+		}
 
-	private String identitynumder;
+		public int getAuditstatus() {
+			return auditstatus;
+		}
 
-	private String identityrealname;
+		public void setAuditstatus(int auditstatus) {
+			this.auditstatus = auditstatus;
+		}
 
-	private String identitypositiveimg;
+		public int getGiftintegral() {
+			return giftintegral;
+		}
 
-	private String identitynegativeimg;
+		public void setGiftintegral(int giftintegral) {
+			this.giftintegral = giftintegral;
+		}
 
-	private String identityhandimg;
+		public Integer getAdminid() {
+			return adminid;
+		}
 
-	private String languagenametext;
+		public void setAdminid(Integer adminid) {
+			this.adminid = adminid;
+		}
 
-	private String majornametext;
+		public Integer getServicecopies() {
+			return servicecopies;
+		}
 
-	private Integer livecityid;
+		public void setServicecopies(Integer servicecopies) {
+			this.servicecopies = servicecopies;
+		}
 
-	private String merchantemail;
 
-	private String merchantphone;
+		public Integer getAdmintype() {
+			return admintype;
+		}
 
-	private Float merchantlevel;
+		public void setAdmintype(Integer admintype) {
+			this.admintype = admintype;
+		}
 
-	private Integer merchantexp;
+		public String getName() {
+			return name;
+		}
 
-	private String qq;
+		public void setName(String name) {
+			this.name = name;
+		}
 
-	private String wechat;
+		public String getPassword() {
+			return password;
+		}
 
-	private String profession;
+		public void setPassword(String password) {
+			this.password = password;
+		}
 
-	private Float height;
+		public Date getCreationtime() {
+			return creationtime;
+		}
 
-	private String constellation;
+		public void setCreationtime(Date creationtime) {
+			this.creationtime = creationtime;
+		}
 
-	private Integer age;
+		public Integer getRoleid() {
+			return roleid;
+		}
 
-	private Integer collectcount;
+		public void setRoleid(Integer roleid) {
+			this.roleid = roleid;
+		}
 
-	private Integer ordercount;
+		public String getCreationip() {
+			return creationip;
+		}
 
-	private Integer browsenumber;
+		public void setCreationip(String creationip) {
+			this.creationip = creationip;
+		}
 
-	private Boolean trusteeship;
+		public Integer getFounder() {
+			return founder;
+		}
 
-	private Date trusteeshipstarttime;
+		public void setFounder(Integer founder) {
+			this.founder = founder;
+		}
 
-	private Integer trusteeshipmonth;
+		public Date getRecententry() {
+			return recententry;
+		}
 
-	private Integer businessstate;
+		public void setRecententry(Date recententry) {
+			this.recententry = recententry;
+		}
 
-	private Integer experience;
+		public String getIp() {
+			return ip;
+		}
 
-	private Boolean experiencestatus;
+		public void setIp(String ip) {
+			this.ip = ip;
+		}
 
-	private Integer auditstatus;
-
-	private Date audittime;
-
-	private Boolean authentication;
-
-	private Boolean authenticationer;
-
-	private Integer creditscore;
-
-	private Boolean stateboolean;
-
-	private Boolean mailboxverification;
-
-	private String registerip;
-
-	private String lastentry;
-
-	private Date userregistrationtime;
-
-	private Date recententry;
-
-	private String selfintroduction;
-
-	private String reason;	
-	
-	private Integer signType;
-	
-	
-
-	public Integer getGiftIntegral() {
-		return giftIntegral;
-	}
-
-	public void setGiftIntegral(Integer giftIntegral) {
-		this.giftIntegral = giftIntegral;
-	}
-
-	public Integer getPostid() {
-		return postid;
-	}
-
-	public void setPostid(Integer postid) {
-		this.postid = postid;
-	}
-
-	public Integer getFmid() {
-		return fmid;
-	}
-
-	public void setFmid(Integer fmid) {
-		this.fmid = fmid;
-	}
-
-	public String getFmname() {
-		return fmname;
-	}
-
-	public void setFmname(String fmname) {
-		this.fmname = fmname;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Date getReleasetime() {
-		return releasetime;
-	}
-
-	public void setReleasetime(Date releasetime) {
-		this.releasetime = releasetime;
-	}
-
-
-	public String getAdminopinion() {
-		return adminopinion;
-	}
-
-	public void setAdminopinion(String adminopinion) {
-		this.adminopinion = adminopinion;
-	}
-
-	public Integer getRecommend() {
-		return recommend;
-	}
-
-	public void setRecommend(Integer recommend) {
-		this.recommend = recommend;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Integer getOperatingState() {
-		return operatingState;
-	}
-
-	public void setOperatingState(Integer operatingState) {
-		this.operatingState = operatingState;
-	}
-
-	public Integer getUserid() {
-		return userid;
-	}
-
-	public void setUserid(Integer userid) {
-		this.userid = userid;
-	}
-
-	public String getUserimgpath() {
-		return userimgpath;
-	}
-
-	public void setUserimgpath(String userimgpath) {
-		this.userimgpath = userimgpath;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getUserrealname() {
-		return userrealname;
-	}
-
-	public void setUserrealname(String userrealname) {
-		this.userrealname = userrealname;
-	}
-
-	public Integer getUsersex() {
-		return usersex;
-	}
-
-	public void setUsersex(Integer usersex) {
-		this.usersex = usersex;
-	}
-
-	public String getUserphone() {
-		return userphone;
-	}
-
-	public void setUserphone(String userphone) {
-		this.userphone = userphone;
-	}
-
-	public String getContactmailbox() {
-		return contactmailbox;
-	}
-
-	public void setContactmailbox(String contactmailbox) {
-		this.contactmailbox = contactmailbox;
-	}
-
-	public Float getUsermoney() {
-		return usermoney;
-	}
-
-	public void setUsermoney(Float usermoney) {
-		this.usermoney = usermoney;
-	}
-
-	public Integer getUserintegral() {
-		return userintegral;
-	}
-
-	public void setUserintegral(Integer userintegral) {
-		this.userintegral = userintegral;
-	}
-
-	public Integer getCountry() {
-		return country;
-	}
-
-	public void setCountry(Integer country) {
-		this.country = country;
-	}
-
-	public Integer getProvincialid() {
-		return provincialid;
-	}
-
-	public void setProvincialid(Integer provincialid) {
-		this.provincialid = provincialid;
-	}
-
-	public Integer getCityid() {
-		return cityid;
-	}
-
-	public void setCityid(Integer cityid) {
-		this.cityid = cityid;
-	}
-
-	public Integer getCountyid() {
-		return countyid;
-	}
-
-	public void setCountyid(Integer countyid) {
-		this.countyid = countyid;
-	}
-
-	public String getAddetail() {
-		return addetail;
-	}
-
-	public void setAddetail(String addetail) {
-		this.addetail = addetail;
-	}
-
-	public Integer getMerchanttype() {
-		return merchanttype;
-	}
-
-	public void setMerchanttype(Integer merchanttype) {
-		this.merchanttype = merchanttype;
-	}
-
-	public Date getMerchantregistrationtime() {
-		return merchantregistrationtime;
-	}
-
-	public void setMerchantregistrationtime(Date merchantregistrationtime) {
-		this.merchantregistrationtime = merchantregistrationtime;
-	}
-
-	public Integer getFirstserviceid() {
-		return firstserviceid;
-	}
-
-	public void setFirstserviceid(Integer firstserviceid) {
-		this.firstserviceid = firstserviceid;
-	}
-
-	public Integer getSecondserviceid() {
-		return secondserviceid;
-	}
-
-	public void setSecondserviceid(Integer secondserviceid) {
-		this.secondserviceid = secondserviceid;
-	}
-
-	public Float getFirstservicemoney() {
-		return firstservicemoney;
-	}
-
-	public void setFirstservicemoney(Float firstservicemoney) {
-		this.firstservicemoney = firstservicemoney;
-	}
-
-	public Float getSecondservicemoney() {
-		return secondservicemoney;
-	}
-
-	public void setSecondservicemoney(Float secondservicemoney) {
-		this.secondservicemoney = secondservicemoney;
-	}
-
-	public String getHospitalname() {
-		return hospitalname;
-	}
-
-	public void setHospitalname(String hospitalname) {
-		this.hospitalname = hospitalname;
-	}
-
-	public String getShopname() {
-		return shopname;
-	}
-
-	public void setShopname(String shopname) {
-		this.shopname = shopname;
-	}
-
-	public String getSignature() {
-		return signature;
-	}
-
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
-
-	public Integer getGuaranteemoney() {
-		return guaranteemoney;
-	}
-
-	public void setGuaranteemoney(Integer guaranteemoney) {
-		this.guaranteemoney = guaranteemoney;
-	}
-
-	public String getShopimg() {
-		return shopimg;
-	}
-
-	public void setShopimg(String shopimg) {
-		this.shopimg = shopimg;
-	}
-
-	public Integer getIdentitytype() {
-		return identitytype;
-	}
-
-	public void setIdentitytype(Integer identitytype) {
-		this.identitytype = identitytype;
-	}
-
-	public String getIdentitynumder() {
-		return identitynumder;
-	}
-
-	public void setIdentitynumder(String identitynumder) {
-		this.identitynumder = identitynumder;
-	}
-
-	public String getIdentityrealname() {
-		return identityrealname;
-	}
-
-	public void setIdentityrealname(String identityrealname) {
-		this.identityrealname = identityrealname;
-	}
-
-	public String getIdentitypositiveimg() {
-		return identitypositiveimg;
-	}
-
-	public void setIdentitypositiveimg(String identitypositiveimg) {
-		this.identitypositiveimg = identitypositiveimg;
-	}
-
-	public String getIdentitynegativeimg() {
-		return identitynegativeimg;
-	}
-
-	public void setIdentitynegativeimg(String identitynegativeimg) {
-		this.identitynegativeimg = identitynegativeimg;
-	}
-
-	public String getIdentityhandimg() {
-		return identityhandimg;
-	}
-
-	public void setIdentityhandimg(String identityhandimg) {
-		this.identityhandimg = identityhandimg;
-	}
-
-	public String getLanguagenametext() {
-		return languagenametext;
-	}
-
-	public void setLanguagenametext(String languagenametext) {
-		this.languagenametext = languagenametext;
-	}
-
-	public String getMajornametext() {
-		return majornametext;
-	}
-
-	public void setMajornametext(String majornametext) {
-		this.majornametext = majornametext;
-	}
-
-	public Integer getLivecityid() {
-		return livecityid;
-	}
-
-	public void setLivecityid(Integer livecityid) {
-		this.livecityid = livecityid;
-	}
-
-	public String getMerchantemail() {
-		return merchantemail;
-	}
-
-	public void setMerchantemail(String merchantemail) {
-		this.merchantemail = merchantemail;
-	}
-
-	public String getMerchantphone() {
-		return merchantphone;
-	}
-
-	public void setMerchantphone(String merchantphone) {
-		this.merchantphone = merchantphone;
-	}
-
-	public Float getMerchantlevel() {
-		return merchantlevel;
-	}
-
-	public void setMerchantlevel(Float merchantlevel) {
-		this.merchantlevel = merchantlevel;
-	}
-
-	public Integer getMerchantexp() {
-		return merchantexp;
-	}
-
-	public void setMerchantexp(Integer merchantexp) {
-		this.merchantexp = merchantexp;
-	}
-
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	public String getWechat() {
-		return wechat;
-	}
-
-	public void setWechat(String wechat) {
-		this.wechat = wechat;
-	}
-
-	public String getProfession() {
-		return profession;
-	}
-
-	public void setProfession(String profession) {
-		this.profession = profession;
-	}
-
-	public Float getHeight() {
-		return height;
-	}
-
-	public void setHeight(Float height) {
-		this.height = height;
-	}
-
-	public String getConstellation() {
-		return constellation;
-	}
-
-	public void setConstellation(String constellation) {
-		this.constellation = constellation;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public Integer getCollectcount() {
-		return collectcount;
-	}
-
-	public void setCollectcount(Integer collectcount) {
-		this.collectcount = collectcount;
-	}
-
-	public Integer getOrdercount() {
-		return ordercount;
-	}
-
-	public void setOrdercount(Integer ordercount) {
-		this.ordercount = ordercount;
-	}
-
-	public Integer getBrowsenumber() {
-		return browsenumber;
-	}
-
-	public void setBrowsenumber(Integer browsenumber) {
-		this.browsenumber = browsenumber;
-	}
-
-	public Boolean getTrusteeship() {
-		return trusteeship;
-	}
-
-	public void setTrusteeship(Boolean trusteeship) {
-		this.trusteeship = trusteeship;
-	}
-
-	public Date getTrusteeshipstarttime() {
-		return trusteeshipstarttime;
-	}
-
-	public void setTrusteeshipstarttime(Date trusteeshipstarttime) {
-		this.trusteeshipstarttime = trusteeshipstarttime;
-	}
-
-	public Integer getTrusteeshipmonth() {
-		return trusteeshipmonth;
-	}
-
-	public void setTrusteeshipmonth(Integer trusteeshipmonth) {
-		this.trusteeshipmonth = trusteeshipmonth;
-	}
-
-	public Integer getBusinessstate() {
-		return businessstate;
-	}
-
-	public void setBusinessstate(Integer businessstate) {
-		this.businessstate = businessstate;
-	}
-
-	public Integer getExperience() {
-		return experience;
-	}
-
-	public void setExperience(Integer experience) {
-		this.experience = experience;
-	}
-
-	public Boolean getExperiencestatus() {
-		return experiencestatus;
-	}
-
-	public void setExperiencestatus(Boolean experiencestatus) {
-		this.experiencestatus = experiencestatus;
-	}
-
-	public Integer getAuditstatus() {
-		return auditstatus;
-	}
-
-	public void setAuditstatus(Integer auditstatus) {
-		this.auditstatus = auditstatus;
-	}
-
-	public Date getAudittime() {
-		return audittime;
-	}
-
-	public void setAudittime(Date audittime) {
-		this.audittime = audittime;
-	}
-
-	public Boolean getAuthentication() {
-		return authentication;
-	}
-
-	public void setAuthentication(Boolean authentication) {
-		this.authentication = authentication;
-	}
-
-	public Boolean getAuthenticationer() {
-		return authenticationer;
-	}
-
-	public void setAuthenticationer(Boolean authenticationer) {
-		this.authenticationer = authenticationer;
-	}
-
-	public Integer getCreditscore() {
-		return creditscore;
-	}
-
-	public void setCreditscore(Integer creditscore) {
-		this.creditscore = creditscore;
-	}
-
-	public Boolean getStateboolean() {
-		return stateboolean;
-	}
-
-	public void setStateboolean(Boolean stateboolean) {
-		this.stateboolean = stateboolean;
-	}
-
-	public Boolean getMailboxverification() {
-		return mailboxverification;
-	}
-
-	public void setMailboxverification(Boolean mailboxverification) {
-		this.mailboxverification = mailboxverification;
-	}
-
-	public String getRegisterip() {
-		return registerip;
-	}
-
-	public void setRegisterip(String registerip) {
-		this.registerip = registerip;
-	}
-
-	public String getLastentry() {
-		return lastentry;
-	}
-
-	public void setLastentry(String lastentry) {
-		this.lastentry = lastentry;
-	}
-
-	public Date getUserregistrationtime() {
-		return userregistrationtime;
-	}
-
-	public void setUserregistrationtime(Date userregistrationtime) {
-		this.userregistrationtime = userregistrationtime;
-	}
-
-	public Date getRecententry() {
-		return recententry;
-	}
-
-	public void setRecententry(Date recententry) {
-		this.recententry = recententry;
-	}
-
-	public String getSelfintroduction() {
-		return selfintroduction;
-	}
-
-	public void setSelfintroduction(String selfintroduction) {
-		this.selfintroduction = selfintroduction;
-	}
-
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-
-	public Integer getSignType() {
-		return signType;
-	}
-
-	public void setSignType(Integer signType) {
-		this.signType = signType;
-	}
-	
-	
+	    
 }

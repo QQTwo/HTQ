@@ -30,7 +30,7 @@ table thead tr>th, tr>td {
 			<p style="font-weight: bold; padding-top: 10px;">金币充值管理</p>
 			<div style="padding: 0px 0px 12px 15px; font-size: 14px;">
 				用户名：<input type="text" value="" placeholder="" name="username">
-				&nbsp; 充值来源: <select name="payment_type">
+				&nbsp; 充值来源: <select name="payment_type" style="height:2rem">
 					<option value="0">全部</option>
 					<option value="1">预定服务</option>
 					<option value="2">服务收益</option>
@@ -41,11 +41,14 @@ table thead tr>th, tr>td {
 					<option value="7">退款</option>
 					<option value="8">提现</option>
 				</select> &nbsp;
-				状态：<select name="status">
+				状态：<select name="status" style="height:2rem">
 					<option value="0">全部</option>
 					<option value="1">待审核</option>
 					<option value="2">审核成功</option>
 					<option value="3">未通过</option>
+					<option value="4">交易成功</option>
+					<option value="5">交易失败</option>
+					<option value="6">充值失败</option>
 				</select> &nbsp;
 				<button type="button" class="btn btn-default btn-sm"
 					style="background-color: rgb(25, 159, 147); color: white;"
@@ -66,7 +69,6 @@ table thead tr>th, tr>td {
 						<TH>状态</TH>
 						<TH>备注</TH>
 						<TH>消费时间</TH>
-						<TH>&nbsp;</TH>
 					</TR>
 				</THEAD>
 				<tbody>
@@ -89,8 +91,11 @@ table thead tr>th, tr>td {
 						<td align="center">+ <span v-text="temp.recordInAndOut"></span> </td>
 						<td align="center" >
 	                        <span v-if="temp.auditStatus==1" style="color:red">待审核</span>  
-	                        <span v-if="temp.auditStatus==2" style="color:green">通过</span> 
-	                        <span v-if="temp.auditStatus==3" >拒绝</span>
+	                        <span v-if="temp.auditStatus==2">审核成功</span> 
+	                        <span v-if="temp.auditStatus==3">未通过</span>
+	                        <span v-if="temp.auditStatus==4">交易成功</span>  
+	                        <span v-if="temp.auditStatus==5">交易失败</span> 
+	                        <span v-if="temp.auditStatus==6">充值失败</span>
                          </td>
 						<td align="center" v-text="temp.recordDescribe">线下充值</td>
 						<td v-text="temp.recordDate">2019-01-18 13:38</td>

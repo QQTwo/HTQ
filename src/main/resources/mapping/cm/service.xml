@@ -199,6 +199,7 @@
 			<if test="dateend!=null and dateend != ''">
 				AND orderTime&lt;=#{dateend}
 			</if>
+			orderStatus=1
 		</where>
 	</select>
 	<!--  查看服务预约-->

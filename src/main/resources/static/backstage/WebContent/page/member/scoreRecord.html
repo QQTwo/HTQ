@@ -45,8 +45,8 @@
 		                    <TH>获取方式</TH>
 		                    <TH>消费</TH>
 		                    <TH>获得</TH>
-		                   
-		                    <TH>备注</TH>
+		                   	<th>状态</th>
+		                    <!-- <TH>备注</TH> -->
 		                    <TH>消费时间</TH>
 		                </TR>
 		            </THEAD>
@@ -59,14 +59,20 @@
                         	<a href="javascript:void(0)" v-text="temp.userName" onclick="location.href='shopperManage_update.html'">茹泚倔强つ6988</a>
                         </td>
                         <td align="center">积分</td>
-                        <td align="center" v-text="temp.integralName">每天签到赠送</td>
+                        <td align="center" v-text="temp.irDescribe">每天签到赠送</td>
                         <td align="center" > -</td>
                                                
                         <td align="center">+ <span v-text="temp.recordInAndOut"></span>
                         </td>
                         
-						
-                        <td align="center" v-text="temp.irDescribe">签到</td>
+						<td>
+							<span v-if="temp.auditStatus==1">待审核</span>
+							<span v-if="temp.auditStatus==2">审核成功</span>
+							<span v-if="temp.auditStatus==3">审核失败</span>
+							<span v-if="temp.auditStatus==4">交易成功</span>
+							<span v-if="temp.auditStatus==5">交易失败</span>
+						</td>
+                       <!--  <td align="center" v-text="temp.irDescribe">签到</td> -->
                         <td v-text="temp.irDate">2019-03-09 14:30</td>
                          
 					</tr>

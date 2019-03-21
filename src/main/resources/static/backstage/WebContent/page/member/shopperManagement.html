@@ -24,29 +24,29 @@
 		</style>
 	</head>
 	<body>
-		<div class="">
+		<div class="" id="shopManangeContent">
 			<blockquote class="back">
 			  <p style="font-weight: bold;padding-top: 10px;">商家管理</p>
 			    <div style="padding:0px 0px 12px 15px;font-size: 14px;">
-			    	用户昵称：<input type="text" value="" placeholder="" name="nickname">
+			    	用户昵称：<input type="text" value="" placeholder="" name="userName">
 					&nbsp;
-					店铺名称：<input type="text" value="" placeholder="" name="nickname">
+					店铺名称：<input type="text" value="" placeholder="" name="shopName">
 					&nbsp;
 					会员组：
-					<select name="huiyuangroup" style="height:2rem;">
-			    		<option value="0">所有</option>
-	                    <option value="2">大陆商家用户</option>
-	                    <option value="3">海外商家用户</option>   
+					<select name="merchantType" style="height:2rem;">
+			    		<option value="-1">所有</option>
+	                    <option value="1">大陆商家用户</option>
+	                    <option value="2">海外商家用户</option>   
 		    		</select>
 		    		&nbsp;
-					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search()">
+					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;" @click="search('1','15')">
 						查询</button>
 					<button type="button" class="btn btn-default btn-sm" style="background-color:rgb(25,159,147);color: white;">导出</button>
 
 			    </div>
 			</blockquote>
 			
-			<div id="shopManangeContent">
+			<div>
 				<table class="table table-bordered" style="width:1366px;">
 					<thead style="background-color:#f2f2f2;">
   						<tr>
@@ -66,18 +66,22 @@
 		                  	<TH style="width: 25rem;">操作</TH>
 						</tr> 
   					</thead>
-  					<tbody v-if="pageInfo.list != null">
-  						  <tr v-for="(temp,index) in pageInfo.list">
+  					<tbody v-if="membersPageInfo.list != null">
+  						  <tr v-for="(temp,index) in membersPageInfo.list">
 						<!--
                         <td align="center"><input  value="487" type="checkbox" name="userid[]"></td>
 						-->
-                        <td align="center" bgcolor="#ffffff" v-text="index"></td>
+<<<<<<< HEAD
+                        <td align="center" bgcolor="#ffffff" v-text="index+1"></td>
+=======
+                        <td align="center" bgcolor="#ffffff" v-text="(index+1)"></td>
+>>>>>>> branch 'master' of https://github.com/QQTwo/KoreaTing.git
                         <td align="center" nowrap v-text="temp.userName">巨蟹boy4650</td>
 						<td align="center" nowrap v-text="temp.shopName">나는 너를 사랑해.</td>                       
 						<td align="center" nowrap >
 						<span v-if="temp.merchantType==0">普通会员</span>
 						<span v-if="temp.merchantType==1">大陆商家用户</span> 
-						<span v-if="temp.merchantType==2">海外商家用户</span></td></td>
+						<span v-if="temp.merchantType==2">海外商家用户</span></td>
                         <td align="center" nowrap v-text="temp.merchantEmail">12390718111@qq.com</td>
                         <td align="center" nowrap v-text="temp.userIntegral">50</td>
                         <td align="center" nowrap v-text="temp.userMoney">4999.80</td>
@@ -86,9 +90,9 @@
 								<span v-if="temp.mailboxVerification==false">未验证</span>
 						</td>
                         <td align="center" nowrap >
-	                        <span v-if="temp.auditStatus==1">待审核</span>
+	                        <span v-if="temp.auditStatus==1" style="color:red">待审核</span>
 							<span v-if="temp.auditStatus==2" style="color:green">已通过</span> 
-							<span v-if="temp.auditStatus==3" style="color:red">未通过</span>
+							<span v-if="temp.auditStatus==3" >未通过</span>
 						</td>
                         <td align="center" nowrap >
                            <span v-if="temp.businessState==1" style="color:green">营业</span>
@@ -98,20 +102,26 @@
                         <td align="center" nowrap v-text="temp.recentEntry">2019-03-05 16:35</td>
                        <!--  <td align="center" nowrap v-text="temp.">0</td> -->
                         <td >
-	                        <a href="javascript:void(0)" onclick="location.href='shopperManage_update.html'">修改</a>　
+<<<<<<< HEAD
+	                        <a href="javascript:void(0)" @click="xiugai(temp.userID)">修改</a>　
 	                        <a href="javascript:void(0)" onclick="location.href='../service/serviceOrder.html'">积分记录</a>　
 	                        <a href="javascript:void(0)" onclick="location.href='jiandingApply.html'">鉴定申请</a>　
 	                        <a href="javascript:void(0)" onclick="location.href='memberCheck_commend.html'">评论</a>　　
+=======
+	                        <a class="btn btn-default btn-xs  memberCheck_edit" @click="memberEdit(temp.userID)"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
+								<a class="btn btn-primary btn-xs  score_record" @click="scorerecord()"><span class="glyphicon glyphicon-inbox"></span> 积分记录</a>
+							    <a class="btn btn-default btn-xs  recommend" @click="command(temp.userid)"><span class=""></span> 评论</a>　
+>>>>>>> branch 'master' of https://github.com/QQTwo/KoreaTing.git
                         </td>
                     </tr>
   					</tbody>
-  					<tbody v-if="pageInfo.list == null">
-  						<tr><td colspan="13">暂无数据</td></tr>
+  					<tbody v-if="membersPageInfo.list == null">
+  						<tr><td colspan="15">暂无数据</td></tr>
   					</tbody>
   					<tfoot>
   						<tr>
   							<td colspan="15">
-  								合计  金币 <span>111111</span> 个，积分 <span> 4889943213</span>
+  								合计  金币 <span v-text="sjinbi">111111</span> 个，积分 <span v-text="sjifen"> 4889943213</span>
   							</td>
   						</tr>
 						<tr>
@@ -119,25 +129,29 @@
 								<ul class="pager">
 									<li>
 										<!--@click="goToPage(1,emailsPageInfo.pageSize)"-->
-								      <a href="javascript:void(0)" >
+								      <a href="javascript:void(0)" @click="goToPage(1,membersPageInfo.pageSize)">
 								        	首页
 								      </a>
 								    </li>
-						    		<li>
-								      <a href="javascript:void(0)" >
+						    		<li v-if="membersPageInfo.hasPreviousPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.prePage, membersPageInfo.pageSize)">
 								        	上一页
 								      </a>
 								    </li>
-								    <li>
-								      <a href="javascript:void(0)" >
+								    <li v-if="membersPageInfo.hasNextPage==true">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.nextPage, membersPageInfo.pageSize)">
 								        	下一页
 								      </a>
 								    </li>
 								    <li>
-								      <a href="javascript:void(0)">
+								      <a href="javascript:void(0)"  @click="goToPage(membersPageInfo.lastPage,membersPageInfo.pageSize)">
 								       		 尾页
 								      </a>
 								    </li>
+								    <li>
+										第<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pageNum">1</span>页，
+										共<span style="border: none;padding: 0 2px;" v-text="membersPageInfo.pages">5</span>页
+									</li>
 								</ul>
 							</td>
 						</tr>				
@@ -148,23 +162,43 @@
 	</body>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
      <script type="text/javascript" src="../../layui/lay/modules/layer.js"></script>
+     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
      <script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="../../vue/vue.js"></script>
 	<script type="text/javascript">
-	layui.config({
-		base : "js/"
-	}).use(['form','layer','jquery','laypage','laydate'],function(){
-		var form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
-		laydate = layui.laydate,
-		$ = layui.jquery;
-		
-		var vMshopM = new Vue({
-			el:"#shopManangeContent",
-			data:{
-				pageInfo:{}
+	
+	var listVm = new Vue({
+		el: "#shopManangeContent",
+		data: {
+			//商家信息
+			membersPageInfo: {},
+			//金币
+			sjinbi: "",
+			//积分
+			sjifen: ""
+		},
+
+		//方法
+		methods: {
+			goToPage: function(n, s) {
+				$.ajax({
+					url : "/c/cmmember/queryShop",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":'0',
+						"shopName":'0',
+						"merchantType":'-1',
+						"num":n,
+						"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+						console.log(data);
+					}
+				});
 			},
+<<<<<<< HEAD
 			methods:{
 				getPageinfo:function(userName,shopName,merchantType,index){
 					if(userName == null || userName=='') userName = '@*';
@@ -175,16 +209,91 @@
 						url:"/c/lzh/member/userShop/"+userName+"/"+shopName+"/"+merchantType+"/"+index,
 						type:"get",
 						success:function(data){
+							console.log(data.list)
 							vMshopM.pageInfo = data;
 						}
 					})
+				},
+				search:function(userName,shopName,merchantType,index){
+					alert(1)
+					/* if(userName == null || userName=='') userName = '@*';
+					if(shopName == null || shopName=='') shopName = '@*';
+					if(merchantType == null || merchantType=='') merchantType = '@*';
+					if(index == null || index=='') index = 1;
+					$.ajax({
+						url:"/c/lzh/member/userShop/"+userName+"/"+shopName+"/"+merchantType+"/"+index,
+						type:"get",
+						success:function(data){
+							console.log(data)
+							vMshopM.pageInfo = data;
+						}
+					}) */
+				},
+				xiugai:function(userid){
+					window.sessionStorage.setItem("userid", userid);
+					window.location.href="shopperManage_update.html";
 				}
+=======
+			//搜索
+			search:function(n,s){
+				var userName=$("[name=userName]").val();
+				var shopName=$("[name=shopName]").val();
+				var merchantType=$("[name=merchantType]").val();
+				$.ajax({
+					url : "/c/cmmember/queryShop",
+					type : "get",
+					dataType : "json",
+					data:{
+						"userName":userName,
+						"shopName":shopName,
+						"merchantType":merchantType,
+						"num":n,
+						"size":s
+					},
+					success : function(data){
+						listVm.membersPageInfo = data;
+					}
+				});
+				this.sum(userName,shopName,merchantType);
+>>>>>>> branch 'master' of https://github.com/QQTwo/KoreaTing.git
 			},
-			created:function(){
-				this.getPageinfo(null,null,null,1);
+			//编辑
+			memberEdit:function(userID){
+				window.sessionStorage.setItem("userID", userID);
+				window.location.href="shopperManage_update.html";
+			},
+			//积分记录
+			scorerecord:function(){
+				window.location.href="../service/serviceOrder.html";
+			},
+			command:function(userid){
+				//进入肖自成的论坛模块
+				window.sessionStorage.setItem("userID", userID);
+				window.location.href="memberCheck_commend.html";
+			},
+			sum:function(userName,shopName,merchantType){
+				$.ajax("/c/cmmember/sumShopmoney", {
+					type: "get",
+					dataType: "json",
+					data:{
+						"userName":userName,
+						"shopName":shopName,
+						"merchantType":merchantType
+					},
+					success: function(data) {
+						listVm.sjinbi=data.sjinbi;
+						listVm.sjifen=data.sjifen;
+					}
+				});
 			}
-			
-		});
+		},
+
+		//组件创建
+		created: function() {
+			this.goToPage(1, 5);
+			//加载金币数和积分
+			this.sum(0,0,'-1');
+		}
 	});
-	</script>
+</script>
 </html>

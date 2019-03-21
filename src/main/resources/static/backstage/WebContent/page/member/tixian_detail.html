@@ -67,7 +67,6 @@
                     -->
 		             <TD colspan="3" align="left">
 			            <span v-if="tixianDeObj.auditStatus==1" style="padding-left:10px">
-				            <input type="radio" name="auditStatus" id="chck1" v-model="tixianDeObj.auditStatus" value="1">待审核
 				            <input type="radio" name="auditStatus" id="chck2" v-model="tixianDeObj.auditStatus" value="2">交易成功
 				            <input type="radio" name="auditStatus" id="chck3" v-model="tixianDeObj.auditStatus" value="3">交易失败
 			            </span>
@@ -83,7 +82,7 @@
 		          </TR>
 		          <TR>
 		            <TD align=right>备注：</TD>
-		            <TD colspan="3"><textarea name="remarks"  rows='3' cols='160' placeholder="请填入拒绝原因" v-text="tixianDeObj.adminOpinion"></textarea></TD>
+		            <TD colspan="3"><textarea name="remarks"  rows='3' cols='160' placeholder="请填入拒绝原因" v-model="tixianDeObj.adminOpinion"></textarea></TD>
 		          </TR>
 		          <tr>
 			            <TD></TD>

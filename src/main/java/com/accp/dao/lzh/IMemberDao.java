@@ -17,4 +17,6 @@ public interface IMemberDao {
 	public List<UserVo> queryUser(@Param("userName")String userNickName);
 	
 	public List<UserVo> queryShop(@Param("userName")String userName,@Param("shopName")String shopName,@Param("merchantType")String merchantType);
+	
+	public UserVo queryShopxq(@Param("userID")int userID);
 }

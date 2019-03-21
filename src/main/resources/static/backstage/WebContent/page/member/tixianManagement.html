@@ -30,7 +30,7 @@
 			    <div style="padding:0px 0px 12px 15px;font-size: 14px;">
 			    	用户名：<input type="text"  placeholder="" name="userName">
 					&nbsp;
-					状态：<select name="tixianStatus">
+					状态：<select name="tixianStatus" style="height:2rem">
 					<option value="0">全部</option>
 					<option value="1">待审核</option>
 					<option value="2">审核成功</option>
@@ -50,7 +50,7 @@
 		                    <TH>类型</TH>
 		                    <TH>获取方式</TH>
 		                    <TH>消费</TH>
-		                    
+		                    <th>获得</th>
 		                    <TH>状态</TH>
 		                    <TH>备注</TH>
 		                    <TH>消费时间</TH>
@@ -68,8 +68,11 @@
                         <td align="center" v-text="">金币</td>
                         <td align="center" v-text="">提现</td>
                         <td align="center">-
-                        <span v-text="temp.money">200.00</span></td>
-                        
+                        <span v-text="temp.money" v-if="temp.auditStatus==2||temp.auditStatus==1"></span>
+                        </td>
+                        	<td>+
+                        	<span v-text="temp.money" v-if="temp.auditStatus==3"></span>
+                        	</td>
 						<td align="center" v-if="temp.auditStatus==1" style="color:red">待审核</td>
                         <td align="center" v-if="temp.auditStatus==2">审核成功</td>
                         <td align="center" v-if="temp.auditStatus==3">未通过</td>

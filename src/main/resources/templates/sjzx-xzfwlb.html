@@ -60,7 +60,7 @@ _weburl = 'http://yphting.zglxkj.com';
 .layui-layer-btn .layui-layer-btn0:hover{ background:#340d6f;}
 </style>        	<li  id="li2"><a href="/index.php/Home/Member/index.html">个人中心</a><span class="my_nav_i"></span></li>
             <li  id="li3"><a href="/index.php/Home/Member/config.html">账户设置</a><span class="my_nav_i"></span></li>
-            <li  id="li4"><a href="/index.php/Home/Member/sms.html">消息</a><span class="my_nav_i"></span></li>
+            <li  id="li4"><a href="/index.php/Home/Member/sms.html">消息<span class="msg_num">5</span></a><span class="my_nav_i"></span></li>
             
         </ul>
 	</div>
@@ -216,4 +216,10 @@ function chktop(){
 <script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
+<script type="text/javascript">
+var userid=[[${session.USER.userid}]];
+
+initWebSocket(-1,userid);	
+</script>
 </html>

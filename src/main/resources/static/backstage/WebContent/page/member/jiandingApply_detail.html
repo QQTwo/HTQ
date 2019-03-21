@@ -68,13 +68,13 @@
 			            <TD align=right >导游经验：</TD>
 			            <TD  v-text="user.experience">1～2年</TD>
 			            <TD align=right>是否有车：</TD>
-			            <TD v-if="user.vehicle==true" >有</TD>
-			             <TD v-if="user.vehicle==false" >无</TD>
+			            <TD v-if="user.vehicle=='true'" >有</TD>
+			             <TD v-if="user.vehicle=='false'" >无</TD>
 			          </TR>
 			          <TR>
 			            <TD align=right>导游证：</TD>
-			            <TD v-if="user.guidecard==true" >有</TD>
-			            <TD v-if="user.guidecard==false" >无</TD>
+			            <TD v-if="user.guidecard=='true'" >有</TD>
+			            <TD v-if="user.guidecard=='false'" >无</TD>
 			            <TD align=right>在韩工作/学习时间：</TD>
 			            <TD v-text="user.inkorea" ></TD>
 			          </TR>
@@ -98,7 +98,18 @@
 			          </TR>
 			                    <TR>
 			            <TD align=right>状态：</TD>
-			            <TD colspan="3" v-text="user.auditStatus" >
+			           <td colspan="3">
+            	<label>
+                <input type="radio" name="status" v-model="user.auditstatus" value="1" id="status_1">
+           			     待审核</label>
+           		<label>
+                <input type="radio" name="status" v-model="user.auditstatus"  value="3" id="status_2">
+          		    	  审核不通过</label>
+          		<label>
+                <input type="radio" name="status" v-model="user.auditstatus"  value="2" id="status_3">
+            		    审核通过</label>            </td>
+
+			            <TD colspan="3" v-if="user.auditStatus==1" >
 			            	<label>
 			            		<!--v-if 针对状态进行radio 的判断-->
 			                <input type="radio" name="status" value="1" id="status_1">
@@ -121,10 +132,10 @@
 			          </TR>
 			          
 			          <tr>
-			            <TD><input type="hidden" name="userid" value="490"></TD>
+			            <TD><input type="hidden" name="userid" v-model="user.userid"></TD>
 			            <td colspan="1"></td>
 			            <TD colspan="1" style="text-align: right;">
-			            	<button type="button"  class="btn btn-success">设置状态</button>
+			            	<button type="button"  class="btn btn-success"  @click="memberEdit()">设置状态</button>
 			            </TD>
 			            <TD colspan="1" >
 			            	<button type="button"  class="btn btn-default" onClick="history.go(-1)">返回</button>
@@ -154,12 +165,51 @@
 					listVm.user = pageData;
 					console.log(pageData)
 				}); 
+			},
+			memberEdit:function(){
+				var text="@*";
+				 var auditstatus = listVm.user.auditstatus;
+				var userid = window.sessionStorage.getItem("userid"); 
+				text = $("[name='admin_reason']").val();
+				$.ajax("/sj/jianding",{
+					type:"get",
+					dataType:"json",
+					data:{
+						"userid":userid,
+						"auditstatus":auditstatus,
+						"reason":text
+					},
+					contentType:"application/json",
+					success:function(json){
+						if(json.code==200){
+							alert("编辑成功！");
+							window.location.href="jiandingApply.html";
+						}else{
+						}
+					}
+				});
+			},
+			updateUserInfo:function(e){
+				var _userInfo=this.userInfo;
+				$.ajax("/c/cmmember/updateuser",{
+					type:"put",
+					dataType:"json",
+					contentType:"application/json",
+					data:JSON.stringify(_userInfo),
+					success:function(json){
+						if(json.code==200){
+							alert("编辑成功！");
+							location.href="memberCheck.html";
+						}else{
+						}
+					}
+				});
 			}
 		},
 
 		//组件创建
 		created: function() {
-			this.goToPage(1, 10);
+			this.goToPage();
 			//加载金币数和积分
 		}
 	});

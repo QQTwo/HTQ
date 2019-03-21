@@ -3,7 +3,6 @@ package com.accp.biz.xzc;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -11,8 +10,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.dao.xzc.ISjDao;
-import com.accp.pojo.Appraisalapply;
-import com.accp.pojo.User;
 import com.accp.vo.xzc.appVo;
 import com.accp.vo.xzc.userVo;
 import com.github.pagehelper.PageHelper;
@@ -32,8 +29,9 @@ public class sjBiz {
 	public userVo queryAllUser(int userid){
 		return sj.queryUser(userid);
 	}
-	public List<appVo> queryAllAppraisalApply(int auditstatus){
-		return sj.queryAllAppraisalApply( auditstatus);
+	/*鉴定审核*/
+	public List<appVo> queryAllAppraisalApply(String name,int auditstatus){
+		return sj.queryAllAppraisalApply(name,auditstatus);
 	}
 	public appVo queryAppraisalApply(int userid){
 		return sj.queryAppraisalApply(userid);
@@ -41,5 +39,13 @@ public class sjBiz {
 	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.READ_COMMITTED,readOnly=false)
 	public void updata(int userid){
 		sj.updatash(userid);
+	}
+	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.READ_COMMITTED,readOnly=false)
+	public int updatauser(int userid,int auditstatus){
+		return sj.updatauser(userid,auditstatus);
+	}
+	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.READ_COMMITTED,readOnly=false)
+	public void updateAppra( int userid,int auditstatus,String reason) {
+		sj.updataAppra(userid, auditstatus, reason);
 	}
 }

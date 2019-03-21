@@ -143,9 +143,15 @@
 						<input name="id" type="hidden" id="id" value="398">
 			            <input name="continue" type="hidden" id="continue" value="aHR0cDovL3lwaHRpbmcuemdseGtqLmNvbS9pbmRleC5waHAvQWRtaW5jcC9GZWVkYmFjay9hcHBseS5odG1s">
 			            <input name="continueurl" type="hidden" id="continueurl" value="http://yphting.zglxkj.com/index.php/Admincp/Feedback/apply.html">
-			            </TD>
+			            </TD> 
+			            <td>
+			            	<select name="sh"class="btn btn-default">
+			            			<option value="2">通过</option>
+			            			<option value="3">拒绝</option>
+			            	</select>
+			            </td>
 			            <TD colspan="1" style="text-align: right;">
-			            	<button type="button"  class="btn btn-success">保存</button>
+			            	<button type="button"  class="btn btn-success"  @click="memberEdit()">保存</button>
 			            </TD>
 			            <TD colspan="1" >
 			            	<button type="button"  class="btn btn-default" onClick="history.go(-1)">返回</button>
@@ -172,10 +178,16 @@
 		methods: {
 			goToPage: function() {
 				var userid = window.sessionStorage.getItem("userid");
-				alert(userid)
 				$.getJSON("/sj/users/" + userid, function(Data) {
 					listVm.User = Data;
 					console.log(Data)
+				}); 
+			},
+			memberEdit:function(){
+				var auditstatus = $("[name=sh]").val();
+				var userid = window.sessionStorage.getItem("userid");
+				$.getJSON("/sj/updatauser/" + userid+"/"+auditstatus, function(Data) {
+					window.location.href="shopperRuzhu.html";
 				}); 
 			}
 		/*  	//搜索

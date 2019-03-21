@@ -32,7 +32,7 @@
 		<ul class="member_nav_ul">
         	        	<li class="cur" id="li2"><a href="">个人中心</a><span class="my_nav_i"></span></li>
             <li  id="li3"><a href="">账户设置</a><span class="my_nav_i"></span></li>
-            <li  id="li4"><a href="">消息</a><span class="my_nav_i"></span></li>
+            <li  id="li4"><a href="">消息<span class="msg_num">5</span></a><span class="my_nav_i"></span></li>
             
         </ul>
 	</div>
@@ -89,7 +89,9 @@
 
 				</div>
 				<script type="text/javascript">
-			
+				var userid=[[${session.USER.userid}]];
+
+				 initWebSocket(-1,userid);	
 		            	  //收货人地址 
 		            	  $("[name='shareaid1']").change(function(){
 			            		 var id= $("[name='shareaid1']").find("option:selected").val();
@@ -223,6 +225,7 @@
 </div>
 <!--联系我们的浮层 end-->
 <script type="text/javascript" src="/Public/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/Public/js/Websocket/ajaxlunxun.js" th:inline="javascript"></script>
 <!-- <script type="text/javascript">
 	//data:base64数据       name:文件名(feng.jpg)
 	var imgObj = {

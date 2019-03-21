@@ -27,18 +27,4 @@ public class RandomNoReiteration {
 		Object[] ints = set.toArray();
 		return ints;
 	}
-	
-//	public static Object[] Random_Removing_duplication(Object[] objs,int size,int scope) {
-//		Set<Integer> set = new HashSet<Integer>();
-//		for (int i = 0; i < objs.length; i++) {
-//			set.add((Integer) objs[i]);
-//		}
-//		Random random=new Random();	 //使用Random函数产生随机数；
-//		while(set.size()<size){
-//			int a = random.nextInt(scope);
-//			set.add(a);
-//		}
-//		Object[] ints = set.toArray();
-//		return ints;
-//	}\
 }
