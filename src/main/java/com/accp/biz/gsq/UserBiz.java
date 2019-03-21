@@ -297,24 +297,20 @@ public class UserBiz {
 				obj.setOrderByPop(2);//人气排序
 				int j = i;
 				//如果用户未能点击三种以上的服务时
-				switch (habit.size()) {
-					case 1:
-						if(j>1) {
-							j = 1;
-						}
-						break;
-					case 2:
-						if(j>2) {
-							j = 2;
-						}
-						break;
+				if(habit.size() == 1) {
+					if(j >= 1) {
+						j = 0;
+					}
+				} else if(habit.size() == 2){
+					if(j >= 2) {
+						j = 1;
+					}
 				}
 				if(habit.size()>0) {
 					if(habit.get(j).getStPid() != null) {
-						obj.setStid(habit.get(j).getStid());//类别编号
 						obj.setStidChild(habit.get(j).getStPid());//子类别编号
 					}else {
-						obj.setFirstStid(habit.get(j).getStid());//类别编号
+						obj.setStid(habit.get(j).getStid());//类别编号
 					}
 				}
 //				obj.setTransactionValueMax((int)(habit.get(j).getsPrice()*1.3));//最大金额

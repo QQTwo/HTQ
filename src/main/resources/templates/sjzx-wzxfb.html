@@ -267,32 +267,23 @@ function showcitys(countryid){
             <a href="/index.php/Home/Seller/index.html">商家中心</a><span class="s_sp_v">-</span><a href="/index.php/Home/Seller/services.html">我发布的服务</a><span class="s_sp_v">-</span>发布微整形        </div>
 		<h2 class="sev_h2_title">发布微整形服务</h2>
 		<form method="post"  id="formpost" onSubmit="return chkServ();" action="cn/c/addServiceswzx" enctype="multipart/form-data">
-			<input  type="hidden"  name="stid"  value="2">
+		<input type="hidden" name="resourceID" value="0">
 			<dl class="info_form_dl">
 				<dt>服务类别</dt>
 				<dd>
 					<!--<select class="sel_f sel_f2 sel_b5 validate[required]" name="catid">-->
-						<select class="sel_f sel_f2 sel_b5 " name="resourceID">
+						<select class="sel_f sel_f2 sel_b5 " name="stid">
 							<option value="">请选择服务类别</option>
-							<option value="165"
-																>眼部整形</option>
-								<option value="161"
-																>鼻部整形</option>
-								<option value="166"
-																>脸部轮廓整形</option>
-								<option value="167"
-																>胸部整形</option>
-								<option value="168"
-																>抗衰老</option>
-								<option value="169"
-																>形体整形</option>
-								<option value="170"
-																>皮肤科</option>
-								<option value="171"
-																>男性整形</option>
-								<option value="172"
-																>牙科矫正</option>
-														</select>
+								<option value="13">眼部整形</option>
+								<option value="14">鼻部整形</option>
+								<option value="15">脸部轮廓整形</option>
+								<option value="16">胸部整形</option>
+								<option value="17">抗衰老</option>
+								<option value="18">形体整形</option>
+								<option value="19">皮肤科</option>
+								<option value="20">男性整形</option>
+								<option value="21">牙科矫正</option>
+						</select>
 				</dd>
 			</dl>
 			

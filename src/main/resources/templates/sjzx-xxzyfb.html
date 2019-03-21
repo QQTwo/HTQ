@@ -255,22 +255,32 @@ function showcitys(countryid){
             <a href="/index.php/Home/Seller/index.html">商家中心</a><span class="s_sp_v">-</span><a href="/index.php/Home/Seller/services.html">我发布的服务</a><span class="s_sp_v">-</span>发布学习资源        </div>
 		<h2 class="sev_h2_title">发布学习资源服务</h2>
 		<form method="post" id="formpost" onSubmit="return chkServ();" action="cn/c/addServicesxxzy" enctype="multipart/form-data">
-			<input type="hidden"  name="stid" value="5">
+			<input type="hidden" name="resourceID" value="0">
 			<dl class="info_form_dl">
 				<dt>服务类别</dt>
 				<dd>
 					<!--<select class="sel_f sel_f2 sel_b5 validate[required]" name="catid">-->
-						<select class="sel_f sel_f2 sel_b5 " name="resourceID">
-							<option value="">请选择资源类别</option>
-							<option value="152"
-																>英语资料</option>
-								<option value="154">—英语视频</option><option value="155">—英语小说</option><option value="183"
-																>毕业论文</option>
-								<option value="184">—工科学院</option><option value="185">—电子信息学院</option><option value="186">—应用科学院</option><option value="187">—生命科学院</option><option value="188">—国际学院</option><option value="189">—外国语学院</option><option value="190">—艺术设计学院</option><option value="191">—体育学院</option><option value="192">—文化传媒学院</option><option value="204"
-																>校园资料</option>
-								<option value="153"
-																>韩语资料</option>
-								<option value="177">—韩语初级资料</option><option value="193">—韩语中级资料</option><option value="182">—韩语高级资料</option>						</select>
+						<select class="sel_f sel_f2 sel_b5 " name="stid">
+								<option value="">请选择资源类别</option>
+								<option value="24">英语资料</option>
+								<option value="28">—英语视频</option>
+								<option value="29">—英语小说</option>
+								<option value="25">毕业论文</option>
+								<option value="30">—工科学院</option>
+								<option value="31">—电子信息学院</option>
+								<option value="32">—应用科学院</option>
+								<option value="33">—生命科学院</option>
+								<option value="34">—国际学院</option>
+								<option value="35">—外国语学院</option>
+								<option value="36">—艺术设计学院</option>
+								<option value="37">—体育学院</option>
+								<option value="38">—文化传媒学院</option>
+								<option value="26">校园资料</option>
+								<option value="27">韩语资料</option>
+								<option value="39">—韩语初级资料</option>
+								<option value="40">—韩语中级资料</option>
+								<option value="41">—韩语高级资料</option>
+						</select>
 				</dd>
 			</dl>
 			<dl class="info_form_dl">

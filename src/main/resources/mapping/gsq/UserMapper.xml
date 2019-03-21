@@ -283,7 +283,7 @@
 		SELECT DISTINCT stid,stPid,AVG(sPrice) AS sPrice
 		FROM `userhabit`
 		WHERE `userid` = #{userid}
-		GROUP BY stid
+		GROUP BY stid,stPid
 		ORDER BY COUNT( * ) DESC
 		LIMIT 3
 	</select>

@@ -290,16 +290,21 @@ function showcitys(countryid){
             <a href="/index.php/Home/Seller/index.html">商家中心</a><span class="s_sp_v">-</span><a href="/index.php/Home/Seller/services.html">我发布的服务</a><span class="s_sp_v">-</span>发布自驾游        </div>
 		<h2 class="sev_h2_title">发布自驾游服务</h2>
 		<form method="post" id="formpost" onSubmit="return chkServ();" action="cn/c/addServiceszjy" enctype="multipart/form-data" >
-			<input   type="hidden"  name="stid" value="1">	
+			<input type="hidden" name="resourceID" value="0">
 			<dl class="info_form_dl">
 				<dt>服务类别</dt>
 				<dd>
 					<!--<select class="sel_f sel_f2 sel_b5 validate[required]" name="catid">-->
-						<select class="sel_f sel_f2 sel_b5 " name="resourceID">
+						<select class="sel_f sel_f2 sel_b5 " name="stid">
 								<option value="">请选择服务类别</option>
-								<option value="203"
-																>观光类</option>
-								<option value="156">—文化观光</option><option value="202">—地陪观光</option><option value="157">—自然观光</option><option value="162">—公务观光</option><option value="163">—古建筑观光</option><option value="164">—生态探险观光</option>						</select>
+								<option value="6">观光类</option>
+								<option value="7">—文化观光</option>
+								<option value="8">—地陪观光</option>
+								<option value="9">—自然观光</option>
+								<option value="10">—公务观光</option>
+								<option value="11">—古建筑观光</option>
+								<option value="12">—生态探险观光</option>						
+						</select>
 				</dd>
 			</dl>
 			
