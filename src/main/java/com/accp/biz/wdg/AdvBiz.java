@@ -1,13 +1,17 @@
 package com.accp.biz.wdg;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.accp.dao.wdg.AdvDao;
+import com.accp.dao.ylh.GoldnotesDao;
 import com.accp.pojo.Advertisement;
 import com.accp.pojo.Advertisementtype;
+import com.accp.pojo.Goldnotes;
 import com.accp.vo.wdg.AdvertisementVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,7 +20,8 @@ import com.github.pagehelper.PageInfo;
 public class AdvBiz {
 		@Autowired
 		private AdvDao dao;
-		
+		@Autowired
+		private GoldnotesDao gdao;
 		public List<Advertisementtype> queryAllAdv(){
 			return dao.queryAllAdv();
 		}
@@ -35,5 +40,8 @@ public class AdvBiz {
 		}
 		public boolean removeAdv(String[] ids) {
 			return dao.deleteAdv(ids)>0;
+		}
+		public int addGold(Goldnotes goldnotes) {
+			return gdao.addGoldnotes(goldnotes);
 		}
 }

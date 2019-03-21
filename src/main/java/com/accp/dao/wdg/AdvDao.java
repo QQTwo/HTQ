@@ -49,4 +49,9 @@ public interface AdvDao {
 			 * @return
 			 */
 			public int deleteAdv(String[] ids);
+			/**
+			 * 根据ID加载广告信息
+			 * @return
+			 */
+			public Advertisement findByaid(@Param("aid") Integer aid);
 }

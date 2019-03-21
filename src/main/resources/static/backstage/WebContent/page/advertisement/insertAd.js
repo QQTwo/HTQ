@@ -8,6 +8,9 @@ layui.config({
 	//加载页面数据
 	var linksData = '';
 	var typesJson;
+	var adv;
+	var aid = cookie.get("advid");
+	var type =  cookie.get("type");//标记为续费
 	//加载广告分类
 	$.ajax({
 		url : "/wdg/adv/types",
@@ -24,6 +27,36 @@ layui.config({
 			form.render();
 		}
 	});
+	
+	if(type == 2){
+		$("#submit_btn").html("完成续费");
+		$("#submit_btn").next().hide();
+		$.getJSON("/wdg/adv/"+aid,function(json){
+			adv = json;
+			$("[name=title]").val(json.atitle);
+			$("[name=aorder]").val(json.aorder);
+			$("[name=apcUrl]").parent().parent().hide();
+			$("[name=aappUrl]").parent().parent().hide();
+			$("[name=desc]").parent().parent().hide();
+			$("[name=file-demo]").parent().parent().hide();
+			$("form input").attr("disabled","disabled");
+			$("#types_select").parent().parent().hide();
+			$("#upload_img").attr("src", json.aimgpath);//显示图片
+			$("#upload_div").show();
+			$.each(typesJson,function(i,e){
+				if(e.atid == json.atid){
+					var price = e.aprice;
+					 $("#types_price").html(price + "元/月");
+				}
+			});
+		})
+	}else if(type == 1){
+		
+	}
+	
+	
+	
+	
 	form.on('select(types)', function(data){
 		var atid =data.value;
 		$.each(typesJson,function(i,e){
@@ -58,27 +91,49 @@ layui.config({
 		obj["rentamonth"] = $("[name=rentAMonth]").val()
 		num = $("#sumPrice").html();
 		obj["price"] = num.replace(/[^0-9]/ig,"");
-		if(obj["atitle"] =="" || obj["aorder"]=="" || obj["aimgpath"]=="" || obj["atid"]=="" || obj["desc"]==""){
-			layer.msg(JSON.stringify(data.field));
-			return false;
-		}
-		$.ajax({
-			type : "POST",
-			url : "/wdg/adv",
-			async : true,
-			dataType : "text", //json text 服务器返回的数据类型
-			contentType : "application/json",
-			data : JSON.stringify(obj),
-			success : function(flag) {
-				if(flag=='true'){
-					layer.alert("添加成功");
+		
+		if(type==2){//续费
+			adv.aappUrl +="↓"+num.replace(/[^0-9]/ig,"");
+			adv.rentamonth += parseFloat($("[name=rentAMonth]").val());
+			$.ajax({
+				type : "PUT",
+				url : "/wdg/adv/xufei",
+				async : true,
+				dataType : "text", //json text 服务器返回的数据类型
+				contentType : "application/json",
+				data : JSON.stringify(adv),
+				success : function(flag) {
+					if(flag=='true'){
+						layer.alert("续费成功");
+						window.close();
+					}
 				}
-			}
-		});
+			});
+		}else if(type==1){//编辑
+			
+		}else{
+			$.ajax({
+				type : "POST",
+				url : "/wdg/adv",
+				async : true,
+				dataType : "text", //json text 服务器返回的数据类型
+				contentType : "application/json",
+				data : JSON.stringify(obj),
+				success : function(flag) {
+					if(flag=='true'){
+						layer.alert("添加成功");
+						window.close();
+						return true;
+					}
+				}
+			});
+		}
+		
+		
 	});
 })
 
-	//选择预览图片
+	// 选择预览图片
 	$("#imgFile").on("change", function(e) {
 		var fr = new FileReader();//读取文件
 		var file = this.files[0];//选择第一个文件

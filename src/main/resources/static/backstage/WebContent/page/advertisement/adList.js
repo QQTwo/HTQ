@@ -119,9 +119,12 @@ layui.config({
 	//操作
 	$("body").on("click",".links_edit",function(){  //编辑
 		var aid = $(this).attr("data-id");
-		window.sessionStorage.setItem("advid",aid);
-		window.sessionStorage.setItem("type",2);//标记为续费
-		window.location.href="insertAd.html";
+		cookie.set("advid",aid,3000);
+		cookie.set("type",2,3000);
+//		window.sessionStorage.setItem("advid",aid);
+//		window.sessionStorage.setItem("type",2);//标记为续费
+		window.parent.addTab($('<a href="javascript:;" data-url="page/advertisement/insertAd.html"><i class="layui-icon" data-icon=""></i><cite>续费</cite></a>'));
+		//window.location.href="insertAd.html";
 	})
 
 	$("body").on("click",".links_del",function(){  //删除

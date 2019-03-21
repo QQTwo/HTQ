@@ -18,7 +18,7 @@
 </head>
 
 <body class="childrenBody" >
-	<form class="layui-form" action="insertAd.html" >
+	<form class="layui-form" action="adList.html"  lay-filter="form_adv" >
 		<div class="layui-form-item">
 			<label class="layui-form-label">标题</label>
 			<div class="layui-input-block">
@@ -49,7 +49,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">广告位置</label>
 			<div class="layui-input-inline">
-				<select name="types"  lay-verify="required"   lay-filter="types"  id="types_select">
+				<select name="types"    lay-filter="types"  id="types_select">
 					<option value=""></option>
 					<option value="0">北京</option>
 					<option value="1">上海</option>
@@ -75,14 +75,14 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">PC端网址</label>
 			<div class="layui-input-block">
-				<input type="text" name="apcUrl" required lay-verify="required"  
+				<input type="text" name="apcUrl" 
 					placeholder="请输入网址" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">手机端网址</label>
 			<div class="layui-input-block">
-				<input type="text" name="aappUrl" required lay-verify="required"  
+				<input type="text" name="aappUrl" 
 					placeholder="请输入网址" autocomplete="off" class="layui-input">
 			</div>
 		</div>
@@ -104,6 +104,7 @@
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script src="../../layui/lay/dest/layui.all.js"></script>
 	<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="../../js/cookieUtil.js"></script>
 	<script type="text/javascript" src="insertAd.js"></script>
 </body>
 </html>

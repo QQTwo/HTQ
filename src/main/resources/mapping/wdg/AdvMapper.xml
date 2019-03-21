@@ -24,7 +24,7 @@
 	<update id="updateAdv">
 		UPDATE `advertisement` SET
 		atid=#{a.atid},`atitle`=#{a.atitle},`aorder`=#{a.aorder},`aimgPath`=#{a.aimgpath}
-		,`apcUrl`=#{a.apcurl},`aappUrl`=#{a.aappurl},`adescribe`=#{a.adescribe}
+		,`apcUrl`=#{a.apcurl},`aappUrl`=#{a.aappurl},`adescribe`=#{a.adescribe},rentAMonth = #{a.rentamonth}
 		WHERE aid=#{a.aid}
 	</update>
 	<insert id="addAdv">
